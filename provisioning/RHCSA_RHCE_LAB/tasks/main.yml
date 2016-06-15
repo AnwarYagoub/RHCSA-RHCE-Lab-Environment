@@ -1,0 +1,5 @@
+---
+- name: "Install 'Server With GUI' environment group"
+  yum:
+    name="@^Server With GUI"
+    state="present"
