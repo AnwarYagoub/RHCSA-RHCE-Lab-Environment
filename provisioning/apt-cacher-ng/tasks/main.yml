@@ -1,0 +1,11 @@
+---
+- name: "Install apt-cacher-ng"
+  apt:
+    name="apt-cacher-ng"
+    state="present"
+
+- name: "Start apt-cacher-ng service & enable it during startup"
+  service:
+    name="apt-cacher-ng"
+    state="started"
+    enabled="yes"

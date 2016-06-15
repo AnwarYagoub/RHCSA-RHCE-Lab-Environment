@@ -35,8 +35,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.provider "virtualbox" do |vb|
       vb.memory = "256"
     end
-    node.vm.provision "shell",
-      inline: "sudo apt-get update && apt-get upgrade -y && apt-get install -y apt-cacher-ng"
+    node.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/cache-server.yml"
+    end
   end
 
 end
