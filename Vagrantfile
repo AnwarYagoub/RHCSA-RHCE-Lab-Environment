@@ -15,6 +15,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.provider "virtualbox" do |vb|
         vb.memory = "256"
       end
+      node.vm.provision "ansible" do |ansible|
+        ansible.playbook = "provisioning/servers.yml"
+      end
     end
   end
 

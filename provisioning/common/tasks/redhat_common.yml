@@ -1,0 +1,14 @@
+---
+- name: "Enable use of cache-server"
+  lineinfile:
+    '
+    dest="/etc/yum.conf"
+    insertafter="^distroverpkg=centos-release"
+    line="proxy=http://{{ cache_server_ip }}:{{ cache_server_port }}"
+    '
+  when: use_cache_server == true
+
+- name: "Upgrade packages"
+  yum:
+    name="*"
+    state="latest"
