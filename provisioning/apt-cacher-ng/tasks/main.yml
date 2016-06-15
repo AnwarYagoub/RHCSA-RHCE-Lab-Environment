@@ -4,6 +4,32 @@
     name="apt-cacher-ng"
     state="present"
 
+- name: "Copy CentOS mirros list to /etc/apt-cacher-ng directory"
+  copy:
+    src="files/centos_mirrors"
+    dest="/etc/apt-cacher-ng/centos_mirrors"
+    owner="root"
+    group="root"
+    mode="644"
+  when: add_centos_support == true
+
+- name: "Add Remap option for CentOS to /etc/apt-cacher-ng/acng.conf"
+  lineinfile:
+    '
+    dest="/etc/apt-cacher-ng/acng.conf"
+    insertafter="^Remap-gentoo: file:gentoo_mirrors.gz /gentoo"
+    line="Remap-centos: file:centos_mirrors /centos"
+    '
+  when: add_centos_support == true
+
+- name: "add VfilePatternEx option to /etc/apt-cacher-ng/acng.conf"
+  lineinfile:
+    '
+    dest="/etc/apt-cacher-ng/acng.conf"
+    line="VfilePatternEx: ^/\?release=[0-9]+&arch=*"
+    '
+  when: add_centos_support == true
+
 - name: "Start apt-cacher-ng service & enable it during startup"
   service:
     name="apt-cacher-ng"
