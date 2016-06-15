@@ -9,15 +9,35 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # configure two machines server1 & server2
   (1..2).each do |i|
     config.vm.define "server#{i}" do |node|
+
+      # machine basic settings
       node.vm.box = "centos/7"
       node.vm.hostname = "server#{i}"
       node.vm.network "private_network", ip: "192.168.4.1#{i}"
+
+      # provider specific settings
       node.vm.provider "virtualbox" do |vb|
         vb.memory = "256"
+        # Get disk path
+        vb.name = "server#{i}"
+        line = `VBoxManage list systemproperties | grep "Default machine folder"`
+        vb_machine_folder = line.split(':')[1].strip()
+        disk_name = "disk2.vdi"
+        second_disk = File.join(vb_machine_folder, vb.name, disk_name)
+        # Add another Hard Disk which is 1 GB in size
+        unless File.exist?(second_disk)
+          vb.customize ['createhd', '--filename', second_disk, '--variant', 'Fixed', '--size', 1 * 1024]
+          vb.customize ["storagectl", :id, "--name", "SATA Controller", "--add", "sata"]
+        end
+        # attach the new Hard Disk
+        vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 2, '--device', 0, '--type', 'hdd', '--medium', second_disk]
       end
+
+      # provision machine using ansible
       node.vm.provision "ansible" do |ansible|
         ansible.playbook = "provisioning/servers.yml"
       end
+
     end
   end
 
