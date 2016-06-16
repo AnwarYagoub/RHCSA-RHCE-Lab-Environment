@@ -13,7 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # machine basic settings
       node.vm.box = "centos/7"
       node.vm.hostname = "server#{i}"
-      node.vm.network "private_network", ip: "192.168.4.1#{i}"
+      node.vm.network "private_network", ip: "192.168.122.1#{i}"
 
       # provider specific settings
       node.vm.provider "virtualbox" do |vb|
@@ -44,7 +44,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "FreeIPA" do |node|
     node.vm.box = "centos/7"
     node.vm.hostname = "freeipa"
-    node.vm.network "private_network", ip: "192.168.4.13"
+    node.vm.network "private_network", ip: "192.168.122.200"
     node.vm.provider "virtualbox" do |vb|
       vb.memory = "2048"
       vb.name = "FreeIPA"
@@ -55,7 +55,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "cache-server" do |node|
     node.vm.box = "ubuntu/trusty64"
     node.vm.hostname = "cache-server"
-    node.vm.network "private_network", ip: "192.168.4.10"
+    node.vm.network "private_network", ip: "192.168.122.100"
     node.vm.provider "virtualbox" do |vb|
       vb.memory = "256"
       vb.name = "cache-server"
