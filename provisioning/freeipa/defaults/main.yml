@@ -1,0 +1,6 @@
+ipa_hostname: ipa
+ipa_fqdn: ipa.example.com
+ipa_ip: 192.168.122.200
+network_interface_name: eth1
+primary_dns: 8.8.8.8
+secondary_dns: 8.8.4.4

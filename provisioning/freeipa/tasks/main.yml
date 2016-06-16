@@ -1,1 +1,23 @@
 ---
+- name: "Set host name"
+  hostname:
+    name="{{ ipa_fqdn }}"
+
+- name: "Update /etc/hosts"
+  lineinfile:
+    dest="/etc/hosts"
+    line="{{ ipa_ip }}  {{ ipa_fqdn }}  {{ ipa_hostname }}"
+
+- name: "Set SELinux to permissive"
+  selinux:
+    policy="targeted"
+    state="permissive"
+
+- name: "Set primary & secondary DNS in network interface conf file"
+  blockinfile:
+    dest: "/etc/sysconfig/network-scripts/ifcfg-{{ network_interface_name }}"
+    insertafter: "PEERDNS=no"
+    block: |
+      DNS1={{ primary_dns }}
+      DNS2={{ secondary_dns }}
+  notify: restart network
