@@ -2,5 +2,6 @@
   - hosts: all
     become: yes
     roles:
+      - common
       - RHCSA_RHCE_LAB
       - freeipa
