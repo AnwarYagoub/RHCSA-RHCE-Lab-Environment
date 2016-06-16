@@ -47,6 +47,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.network "private_network", ip: "192.168.4.13"
     node.vm.provider "virtualbox" do |vb|
       vb.memory = "2048"
+      vb.name = "FreeIPA"
       vb.gui = true
     end
   end
@@ -57,6 +58,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.network "private_network", ip: "192.168.4.10"
     node.vm.provider "virtualbox" do |vb|
       vb.memory = "256"
+      vb.name = "cache-server"
     end
     node.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/cache-server.yml"
