@@ -21,3 +21,12 @@
       DNS1={{ primary_dns }}
       DNS2={{ secondary_dns }}
   notify: restart network
+
+- name: "Install FreeIPA packages"
+  yum:
+    name="{{ item }}"
+    state="present"
+  with_items:
+    - ipa-server
+    - ipa-server-dns
+    - bind-dyndb-ldap
