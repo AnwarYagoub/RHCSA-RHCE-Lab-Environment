@@ -17,7 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       # provider specific settings
       node.vm.provider "virtualbox" do |vb|
-        vb.memory = "256"
+        vb.memory = "1024"
         # Get disk path
         vb.name = "server#{i}"
         line = `VBoxManage list systemproperties | grep "Default machine folder"`
@@ -57,7 +57,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.hostname = "cache-server"
     node.vm.network "private_network", ip: "192.168.122.100"
     node.vm.provider "virtualbox" do |vb|
-      vb.memory = "256"
+      vb.memory = "512"
       vb.name = "cache-server"
     end
     node.vm.provision "ansible" do |ansible|
