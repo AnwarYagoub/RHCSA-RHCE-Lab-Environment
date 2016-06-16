@@ -42,13 +42,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "FreeIPA" do |node|
+    # machine basic settings
     node.vm.box = "centos/7"
     node.vm.hostname = "freeipa"
     node.vm.network "private_network", ip: "192.168.122.200"
+    # provider specific settings
     node.vm.provider "virtualbox" do |vb|
       vb.memory = "2048"
       vb.name = "FreeIPA"
       vb.gui = true
+    end
+    # provision machine using ansible
+    node.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/freeipa.yml"
     end
   end
 
