@@ -5,6 +5,15 @@
     dest="/etc/apt/apt.conf.d/01proxy"
   when: use_cache_server == true
 
+- name: "Install dependencies"
+  apt:
+    name="{{ item }}"
+    state="present"
+    update_cache="yes"
+  wiht_items:
+    - python-simplejson
+    - aptitude
+
 - name: "Upgrade packages"
   apt:
     update_cache="yes"
