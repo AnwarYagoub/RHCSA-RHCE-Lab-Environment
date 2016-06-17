@@ -10,8 +10,8 @@
     name="{{ item }}"
     state="present"
     update_cache="yes"
-  wiht_items:
-    - python-simplejson
+  with_items:
+    - python-apt
     - aptitude
 
 - name: "Upgrade packages"
