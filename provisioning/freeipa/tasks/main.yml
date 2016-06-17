@@ -30,3 +30,46 @@
     - ipa-server
     - ipa-server-dns
     - bind-dyndb-ldap
+
+- name: "Check if FreeIPA is already installed"
+  stat:
+    path="/root/cacert.p12"
+  register: freeipa_status
+
+- name: "Configure FreeIPA server"
+  shell:
+    "
+    ipa-server-install \
+    	--setup-dns \
+    	--domain={{ domain_name }} \
+    	--realm={{ ipa_realm }} \
+    	--ds-password={{ ldap_directory_manager_password }} \
+    	--admin-password={{ ipa_admin_password }} \
+    	--forwarder={{ primary_dns }} \
+      --forwarder={{ secondary_dns }} \
+    	--reverse-zone={{ reverse_dns }} \
+    	--unattended
+    "
+  when: freeipa_status.stat.exists == false
+
+- name: "Start & Enable firewalld service"
+  service:
+    name="firewalld"
+    state="started"
+    enabled="yes"
+
+- name: "Open needed ports in firewalld"
+  firewalld:
+    service="{{ item }}"
+    permanent="yes"
+    state="enabled"
+    immediate="yes"
+  with_items:
+    - http
+    - https
+    - ldap
+    - ldaps
+    - kerberos
+    - kpasswd
+    - dns
+    - ntp
