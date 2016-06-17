@@ -59,7 +59,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "cache-server" do |node|
-    node.vm.box = "ubuntu/trusty64"
+    node.vm.box = "ubuntu/xenial64"
     node.vm.hostname = "cache-server"
     node.vm.network "private_network", ip: "192.168.122.100"
     node.vm.provider "virtualbox" do |vb|
