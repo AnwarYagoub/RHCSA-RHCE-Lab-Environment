@@ -26,7 +26,7 @@
   lineinfile:
     '
     dest="/etc/apt-cacher-ng/acng.conf"
-    line="VfilePatternEx: ^/\?release=[0-9]+&arch=*"
+    line="VfilePatternEx: ^/\?release=[0-9]+&arch="
     '
   when: add_centos_support == true
 
