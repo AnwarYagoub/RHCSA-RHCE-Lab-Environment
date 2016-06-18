@@ -1,5 +1,5 @@
 ---
 - name: restart network
   service:
-    name="network"
+    name="NetworkManager"
     state="restarted"
