@@ -13,7 +13,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # machine basic settings
       node.vm.box = "centos/7"
       node.vm.hostname = "server#{i}"
-      node.vm.network "private_network", ip: "192.168.122.1#{i}"
+      node.vm.network "private_network", ip: "192.168.122.2#{i}0"
 
       # provider specific settings
       node.vm.provider "virtualbox" do |vb|
