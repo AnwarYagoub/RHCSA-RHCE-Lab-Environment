@@ -1,0 +1,27 @@
+---
+- name: "Install VSFTPD"
+  yum:
+    name="vsftpd"
+    state="present"
+
+- name: "Open ftp ports in firewall"
+  firewalld:
+    service="ftp"
+    permanent="yes"
+    state="enabled"
+    immediate="yes"
+
+- name: "start vsftpd service & enable it to start after reboot"
+  service:
+    name="vsftpd"
+    state="started"
+    enabled="yes"
+
+- name: "Check if cacert.p12 exists in /var/ftp/pub"
+  stat:
+    path="/var/ftp/pub/cacert.p12"
+  register: cacert_state
+
+- name: "Copy FreeIPA certificate authority file to /var/ftp/pub"
+  shell: cp /root/cacert.p12 /var/ftp/pub
+  when: cacert_state.stat.exists == false
