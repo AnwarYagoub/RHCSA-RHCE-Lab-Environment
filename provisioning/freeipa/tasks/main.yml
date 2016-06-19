@@ -13,13 +13,21 @@
     policy="targeted"
     state="permissive"
 
+- name: "Add PEERDNS=no option"
+  lineinfile:
+    dest="/etc/sysconfig/network-scripts/ifcfg-{{ item }}"
+    line="PEERDNS=no"
+  with_items: "{{ network_interfaces }}"
+  notify: restart network
+
 - name: "Set primary & secondary DNS in network interface conf file"
   blockinfile:
-    dest: "/etc/sysconfig/network-scripts/ifcfg-{{ network_interface_name }}"
+    dest: "/etc/sysconfig/network-scripts/ifcfg-{{ item }}"
     insertafter: "PEERDNS=no"
     block: |
       DNS1={{ primary_dns }}
       DNS2={{ secondary_dns }}
+  with_items: "{{ network_interfaces }}"
   notify: restart network
 
 - name: "Install FreeIPA packages"
