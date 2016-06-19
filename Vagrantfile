@@ -44,7 +44,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "FreeIPA" do |node|
     # machine basic settings
     node.vm.box = "centos/7"
-    node.vm.hostname = "freeipa"
+    node.vm.hostname = "ipa"
     node.vm.network "private_network", ip: "192.168.122.200"
     # provider specific settings
     node.vm.provider "virtualbox" do |vb|
