@@ -60,11 +60,14 @@
     "
   when: freeipa_status.stat.exists == false
 
-- name: "Start & Enable firewalld service"
+- name: "Start & Enable krb5kdc/firewalld services"
   service:
-    name="firewalld"
+    name="{{ item }}"
     state="started"
     enabled="yes"
+  with_items:
+    - krb5kdc
+    - firewalld
 
 - name: "Open needed ports in firewalld"
   firewalld:
