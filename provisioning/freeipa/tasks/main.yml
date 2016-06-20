@@ -60,6 +60,12 @@
     "
   when: freeipa_status.stat.exists == false
 
+- name: "Start & Enable krb5kdc service"
+  service:
+    name="krb5kdc"
+    state="started"
+    enabled="yes"
+
 - name: "Start & Enable firewalld service"
   service:
     name="firewalld"
