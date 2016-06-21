@@ -32,3 +32,5 @@
 - name: "Add user to FreeIPA"
   shell: ipa user-add {{ item.user }} --first {{ item.first }} --last {{ item.last }}
   with_items: "{{ freeipa_user }}"
+  register: output
+  failed_when: output.changed == false
