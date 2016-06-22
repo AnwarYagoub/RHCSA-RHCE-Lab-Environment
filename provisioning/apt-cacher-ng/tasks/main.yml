@@ -12,6 +12,7 @@
     group="root"
     mode="644"
   when: add_centos_support == true
+  notify: restart apt-cacher-ng
 
 - name: "Add Remap option for CentOS to /etc/apt-cacher-ng/acng.conf"
   lineinfile:
@@ -21,6 +22,7 @@
     line="Remap-centos: file:centos_mirrors /centos"
     '
   when: add_centos_support == true
+  notify: restart apt-cacher-ng
 
 - name: "add VfilePatternEx option to /etc/apt-cacher-ng/acng.conf"
   lineinfile:
@@ -29,6 +31,7 @@
     line="VfilePatternEx: ^/\?release=[0-9]+&arch="
     '
   when: add_centos_support == true
+  notify: restart apt-cacher-ng
 
 - name: "Start apt-cacher-ng service & enable it during startup"
   service:
