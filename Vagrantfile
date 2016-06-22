@@ -9,7 +9,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # configure cache-server machine
   config.vm.define "cache-server" do |node|
     node.vm.box = "debian/jessie64"
-    node.vm.hostname = "cache-server"
+    node.vm.hostname = "cache-server.example.com"
     node.vm.network "private_network", ip: "192.168.122.100"
     node.vm.provider "virtualbox" do |vb|
       vb.memory = "512"
@@ -26,7 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       # machine basic settings
       node.vm.box = "centos/7"
-      node.vm.hostname = "server#{i}"
+      node.vm.hostname = "server#{i}.example.com"
       node.vm.network "private_network", ip: "192.168.122.2#{i}0"
 
       # provider specific settings
@@ -59,7 +59,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "FreeIPA" do |node|
     # machine basic settings
     node.vm.box = "centos/7"
-    node.vm.hostname = "ipa"
+    node.vm.hostname = "ipa.example.com"
     node.vm.network "private_network", ip: "192.168.122.200"
     # provider specific settings
     node.vm.provider "virtualbox" do |vb|
