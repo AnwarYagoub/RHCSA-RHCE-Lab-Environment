@@ -6,6 +6,20 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
+  # configure cache-server machine
+  config.vm.define "cache-server" do |node|
+    node.vm.box = "debian/jessie64"
+    node.vm.hostname = "cache-server"
+    node.vm.network "private_network", ip: "192.168.122.100"
+    node.vm.provider "virtualbox" do |vb|
+      vb.memory = "512"
+      vb.name = "cache-server"
+    end
+    node.vm.provision "ansible" do |ansible|
+      ansible.playbook = "provisioning/cache-server.yml"
+    end
+  end
+
   # configure two machines server1 & server2
   (1..2).each do |i|
     config.vm.define "server#{i}" do |node|
@@ -41,6 +55,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  # configure FreeIPA machine
   config.vm.define "FreeIPA" do |node|
     # machine basic settings
     node.vm.box = "centos/7"
@@ -55,19 +70,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # provision machine using ansible
     node.vm.provision "ansible" do |ansible|
       ansible.playbook = "provisioning/freeipa.yml"
-    end
-  end
-
-  config.vm.define "cache-server" do |node|
-    node.vm.box = "debian/jessie64"
-    node.vm.hostname = "cache-server"
-    node.vm.network "private_network", ip: "192.168.122.100"
-    node.vm.provider "virtualbox" do |vb|
-      vb.memory = "512"
-      vb.name = "cache-server"
-    end
-    node.vm.provision "ansible" do |ansible|
-      ansible.playbook = "provisioning/cache-server.yml"
     end
   end
 
