@@ -3,3 +3,16 @@
   yum:
     name="@^Server With GUI"
     state="present"
+
+- name: "Add user account & set its password"
+  user:
+    name="{{ default_user_name }}"
+    groups="wheel"
+    password="{{ defaul_user_password }}"
+    update_password="always"
+
+- name: "change root password"
+  user:
+    name="root"
+    password="{{ root_user_password }}"
+    update_password="always"
