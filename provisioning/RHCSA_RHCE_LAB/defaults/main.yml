@@ -1,3 +1,8 @@
 default_user_name: user
 defaul_user_password: $6$Q3GYp7hPMnnS$eYYW8MWVIky3A71Isq714ErAjDseEgT6AoedBQz9VY8h4ZyYrbVPi3A.r8sGkbnUqxHb4DFK5GcxuGSw6ojED.
 root_user_password: $6$Q3GYp7hPMnnS$eYYW8MWVIky3A71Isq714ErAjDseEgT6AoedBQz9VY8h4ZyYrbVPi3A.r8sGkbnUqxHb4DFK5GcxuGSw6ojED.
+network_interfaces:
+  - eth0
+  - eth1
+primary_dns: 8.8.8.8
+secondary_dns: 8.8.4.4
