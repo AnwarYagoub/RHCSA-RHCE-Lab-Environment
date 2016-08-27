@@ -1,6 +1,6 @@
 # Red Hat RHCSA-RHCE 7 Cert Guide (Lab Environment)
 
-##About
+## About
 This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert Guide: Red Hat Enterprise Linux 7** book written  by Sander Van Vugt.
 
 ## What is included?
