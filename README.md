@@ -22,7 +22,6 @@ This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert 
 - Vagrant.
 - Ansible.
 
-<br>
 ### 1. Install [Virtualbox](https://www.virtualbox.org) :
 
 **1.1 Install virtualbox on Ubuntu:**
@@ -105,9 +104,37 @@ $ sudo easy_install pip
 $ sudo pip install ansible netaddr
 ```
 <br>
-## How to use?
+## How to start servers?
 - Navigate to project path where Vagranfile exists.
 - Run vagrant up command to initiate the environment:
 ```shell
+# start all servers
 $ vagrant up
+
+# start a specific server
+$ vagrant up server1
+$ vagrant up server2
+$ vagrant up cache-server
+$ vagrant up FreeIPA
+```
+<br>
+## How to access servers?
+To get shell access to any of environment servers
+```shell
+$ vagrant ssh server1
+$ vagrant ssh server2
+$ vagrant ssh cache-server
+$ vagrant ssh FreeIPA
+```
+<br>
+## How to stop servers?
+```shell
+# stop all servers
+$ vagrant halt
+
+# stop specific server
+$ vagrant halt server1
+$ vagrant halt server2
+$ vagrant halt cache-server
+$ vagrant halt FreeIPA
 ```
