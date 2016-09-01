@@ -18,11 +18,13 @@ This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert 
 |FreeIPA|192.168.122.200|
 
 ## install dependencies:
-- Virtualbox.
-- Vagrant.
-- Ansible.
+- [Virtualbox](https://www.virtualbox.org): cross-platform virtualization application.
+- [Vagrant](https://www.vagrantup.com): tool for building complete development environments. With an easy-to-use workflow and focus on automation 
+- [Ansible](https://www.ansible.com):  free-software platform for configuring and managing computers which combines multi-node software deployment, ad hoc task execution, and configuration management.
 
-### 1. Install [Virtualbox](https://www.virtualbox.org) :
+Don't worry you don't have to be expert on any of these dependencies.
+<br>
+### 1. Install virtualbox :
 
 **1.1 Install virtualbox on Ubuntu:**
 
@@ -55,7 +57,7 @@ $ sudo wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
 $ sudo yum install VirtualBox-5.1
 ```
 <br>
-### 2. Install [Vagrant](https://www.vagrantup.com/) :
+### 2. Install vagrant :
 
 **2.1 Install vagrant on Debian-based Linux Ubuntu/Mint (64-bit):**
 ```shell
@@ -85,7 +87,7 @@ $ wget https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_i686.rpm
 $ sudo rpm -ivh vagrant_1.8.5_i686.rpm
 ```
 <br>
-### 3. Install [Ansible](https://www.ansible.com/) :
+### 3. Install ansible :
 **3.1 Install ansible on Debian-based distributions (Ubuntu/Mint):**
 ```shell
 $ sudo apt-get install gcc libssl-dev python-dev python-setuptools
@@ -105,36 +107,49 @@ $ sudo pip install ansible netaddr
 ```
 <br>
 ## How to start servers?
-- Navigate to project path where Vagranfile exists.
-- Run vagrant up command to initiate the environment:
-```shell
-# start all servers
-$ vagrant up
+Navigate to project path where Vagranfile exists.
 
-# start a specific server
+- start all servers
+```shell
+$ vagrant up
+```
+- start a specific server
+```shell
+$ vagrant up MACHINE_NAME
+```
+replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
+```shell
 $ vagrant up server1
-$ vagrant up server2
-$ vagrant up cache-server
-$ vagrant up FreeIPA
 ```
 <br>
 ## How to access servers?
-To get shell access to any of environment servers
+Navigate to project path where Vagranfile exists.
+
+- to get shell access to any of environment servers
+```shell
+$ vagrant ssh MACHINE_NAME
+```
+replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
 ```shell
 $ vagrant ssh server1
-$ vagrant ssh server2
-$ vagrant ssh cache-server
-$ vagrant ssh FreeIPA
+```
+- You can also access servers using ip addresses listed above.
+```shell
+$ vagrant ssh user@192.168.122.120
 ```
 <br>
 ## How to stop servers?
-```shell
-# stop all servers
-$ vagrant halt
+Navigate to project path where Vagranfile exists.
 
-# stop specific server
+- stop all servers
+```shell
+$ vagrant halt
+```
+- stop a specific server
+```shell
+$ vagrant halt MACHINE_NAME
+```
+replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
+```shell
 $ vagrant halt server1
-$ vagrant halt server2
-$ vagrant halt cache-server
-$ vagrant halt FreeIPA
 ```
