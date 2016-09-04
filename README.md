@@ -2,23 +2,13 @@
 
 ## About
 This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert Guide: Red Hat Enterprise Linux 7** book written  by Sander Van Vugt.
-<br>
+
 ## What is included?
 - server1: CentOS box (Server With GUI).
 - server2: same as Server1
 - cache-server: Debian box used for package caching.
 - FreeIPA: CentOS box with FreeIPA configured.
-<br>
 
-## IP addresses
-| Server | IP address |
-|---|---|
-|cache-server|192.168.122.100 |
-|server1|192.168.122.210|
-|server2|192.168.122.220|
-|FreeIPA|192.168.122.200|
-
-<br>
 ## Install dependencies:
 - [Virtualbox](https://www.virtualbox.org): cross-platform virtualization application.
 - [Vagrant](https://www.vagrantup.com): tool for building complete development environments. With an easy-to-use workflow and focus on automation 
@@ -104,14 +94,14 @@ $ sudo easy_install pip
 
 $ sudo pip install ansible netaddr
 ```
-<br>
+
 ## Get environment
 ```shell
 $ git clone https://github.com/AnwarYagoub/RHCSA-RHCE-Lab-Environment.git
 
 $ cd RHCSA-RHCE-Lab-Environment
 ```
-<br>
+
 ## How to start servers?
 Navigate to project path where Vagranfile exists.
 
@@ -127,7 +117,7 @@ replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
 ```shell
 $ vagrant up server1
 ```
-<br>
+
 ## How to access servers?
 Navigate to project path where Vagranfile exists.
 
@@ -139,11 +129,11 @@ replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
 ```shell
 $ vagrant ssh server1
 ```
-- You can also access servers using ip addresses listed above.
+- You can also access servers using ip addresses listed below.
 ```shell
 $ vagrant ssh user@192.168.122.120
 ```
-<br>
+
 ## How to stop servers?
 Navigate to project path where Vagranfile exists.
 
@@ -159,3 +149,12 @@ replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
 ```shell
 $ vagrant halt server1
 ```
+
+
+## IP addresses & credentials
+| Server | IP address | username | password |
+|---|---|:---:|:---:|
+|cache-server|192.168.122.100 |vagrant|vagrant|
+|server1|192.168.122.210|user|password|
+|server2|192.168.122.220|user|password|
+|FreeIPA|192.168.122.200|user|password|
