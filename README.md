@@ -2,12 +2,13 @@
 
 ## About
 This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert Guide: Red Hat Enterprise Linux 7** book written  by Sander Van Vugt.
-
+<br>
 ## What is included?
 - server1: CentOS box (Server With GUI).
 - server2: same as Server1
 - cache-server: Debian box used for package caching.
 - FreeIPA: CentOS box with FreeIPA configured.
+<br>
 
 ## IP addresses
 | Server | IP address |
@@ -17,13 +18,13 @@ This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert 
 |server2|192.168.122.220|
 |FreeIPA|192.168.122.200|
 
-## install dependencies:
+<br>
+## Install dependencies:
 - [Virtualbox](https://www.virtualbox.org): cross-platform virtualization application.
 - [Vagrant](https://www.vagrantup.com): tool for building complete development environments. With an easy-to-use workflow and focus on automation 
 - [Ansible](https://www.ansible.com):  free-software platform for configuring and managing computers which combines multi-node software deployment, ad hoc task execution, and configuration management.
 
-Don't worry you don't have to be expert on any of these dependencies.
-<br>
+Don't worry you don't have to be expert on any of these tools.
 ### 1. Install virtualbox :
 
 **1.1 Install virtualbox on Ubuntu:**
@@ -56,7 +57,6 @@ $ sudo wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
 
 $ sudo yum install VirtualBox-5.1
 ```
-<br>
 ### 2. Install vagrant :
 
 **2.1 Install vagrant on Debian-based Linux Ubuntu/Mint (64-bit):**
@@ -86,7 +86,6 @@ $ wget https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_i686.rpm
 
 $ sudo rpm -ivh vagrant_1.8.5_i686.rpm
 ```
-<br>
 ### 3. Install ansible :
 **3.1 Install ansible on Debian-based distributions (Ubuntu/Mint):**
 ```shell
@@ -104,6 +103,13 @@ $ sudo yum install gcc openssl-devel python-devel python-setuptools
 $ sudo easy_install pip
 
 $ sudo pip install ansible netaddr
+```
+<br>
+## Get environment
+```shell
+$ git clone https://github.com/AnwarYagoub/RHCSA-RHCE-Lab-Environment.git
+
+$ cd RHCSA-RHCE-Lab-Environment
 ```
 <br>
 ## How to start servers?
