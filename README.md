@@ -9,20 +9,12 @@ This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert 
 - cache-server: Debian box used for package caching.
 - FreeIPA: CentOS box with FreeIPA configured.
 
-## IP addresses
-| Server | IP address |
-|---|---|
-|cache-server|192.168.4.100 |
-|server1|192.168.4.210|
-|server2|192.168.4.220|
-|FreeIPA|192.168.4.200|
-
 ## install dependencies:
 - [Virtualbox](https://www.virtualbox.org): cross-platform virtualization application.
 - [Vagrant](https://www.vagrantup.com): tool for building complete development environments. With an easy-to-use workflow and focus on automation
 - [Ansible](https://www.ansible.com):  free-software platform for configuring and managing computers which combines multi-node software deployment, ad hoc task execution, and configuration management.
 
-Don't worry you don't have to be expert on any of these dependencies.
+Don't worry you don't have to be expert on any of these tools.
 <br>
 ### 1. Install virtualbox :
 
@@ -133,13 +125,13 @@ replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
 ```shell
 $ vagrant ssh server1
 ```
-- You can also access servers using ip addresses listed above.
+- You can also access servers using ip addresses listed below.
 ```shell
 $ vagrant ssh user@192.168.4.120
 ```
 <br>
 ## How to stop servers?
-Navigate to project path where Vagranfile exists.
+Navigate to project path where Vagrantfile exists.
 
 - stop all servers
 ```shell
@@ -153,3 +145,11 @@ replace **MACHINE_NAME** with any of (server1, server2, cache-server, freeipa)
 ```shell
 $ vagrant halt server1
 ```
+
+## IP addresses & credentials
+| Server | IP address | username | password |
+|---|---|:---:|:---:|
+|cache-server|192.168.122.100 |vagrant|vagrant|
+|server1|192.168.122.210|user|password|
+|server2|192.168.122.220|user|password|
+|FreeIPA|192.168.122.200|user|password|

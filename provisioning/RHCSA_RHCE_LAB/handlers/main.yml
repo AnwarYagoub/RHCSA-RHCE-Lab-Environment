@@ -1,0 +1,9 @@
+---
+- name: update pip
+  shell: pip install --upgrade pip
+
+- name: Upgrade packages
+  yum:
+    name="*"
+    state="latest"
+  # notify: reboot TODO 
