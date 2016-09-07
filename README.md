@@ -1,7 +1,7 @@
 # Red Hat RHCSA-RHCE 7 Cert Guide (Lab Environment)
 
 ## About
-This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert Guide: Red Hat Enterprise Linux 7** book written by Sander Van Vugt.
+This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert Guide: Red Hat Enterprise Linux 7** book written by Sander van Vugt.
 
 ## What is included?
 - server1: CentOS box (Server With GUI).
