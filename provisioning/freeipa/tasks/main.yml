@@ -20,13 +20,11 @@
   with_items: "{{ network_interfaces }}"
   notify: restart network
 
-- name: "Set primary & secondary DNS in network interface conf file"
+- name: "Set primary DNS in network interface conf file"
   blockinfile:
     dest: "/etc/sysconfig/network-scripts/ifcfg-{{ item }}"
     insertafter: "PEERDNS=no"
-    block: |
-      DNS1={{ primary_dns }}
-      DNS2={{ secondary_dns }}
+    block: DNS1={{ primary_dns }}
   with_items: "{{ network_interfaces }}"
   notify: restart network
 
@@ -35,9 +33,16 @@
     name="{{ item }}"
     state="present"
   with_items:
+    - haveged # speedup ipa-server-install, see http://blog-ftweedal.rhcloud.com/2014/05/more-entropy-with-haveged/, requires epel-release
     - ipa-server
     - ipa-server-dns
     - bind-dyndb-ldap
+
+- name: "Start haveged"
+  service:
+    name: haveged
+    state: started
+    enabled: yes
 
 - name: "Check if FreeIPA is already installed"
   stat:
@@ -54,7 +59,6 @@
     	--ds-password={{ ldap_directory_manager_password }} \
     	--admin-password={{ ipa_admin_password }} \
     	--forwarder={{ primary_dns }} \
-      --forwarder={{ secondary_dns }} \
     	--reverse-zone={{ reverse_dns }} \
     	--unattended
     "

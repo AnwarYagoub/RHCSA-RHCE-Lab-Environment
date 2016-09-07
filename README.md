@@ -1,7 +1,7 @@
 # Red Hat RHCSA-RHCE 7 Cert Guide (Lab Environment)
 
 ## About
-This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert Guide: Red Hat Enterprise Linux 7** book written  by Sander Van Vugt.
+This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert Guide: Red Hat Enterprise Linux 7** book written by Sander Van Vugt.
 
 ## What is included?
 - server1: CentOS box (Server With GUI).
@@ -9,12 +9,21 @@ This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert 
 - cache-server: Debian box used for package caching.
 - FreeIPA: CentOS box with FreeIPA configured.
 
-## Install dependencies:
+## IP addresses
+| Server | IP address |
+|---|---|
+|cache-server|192.168.4.100 |
+|server1|192.168.4.210|
+|server2|192.168.4.220|
+|FreeIPA|192.168.4.200|
+
+## install dependencies:
 - [Virtualbox](https://www.virtualbox.org): cross-platform virtualization application.
-- [Vagrant](https://www.vagrantup.com): tool for building complete development environments. With an easy-to-use workflow and focus on automation 
+- [Vagrant](https://www.vagrantup.com): tool for building complete development environments. With an easy-to-use workflow and focus on automation
 - [Ansible](https://www.ansible.com):  free-software platform for configuring and managing computers which combines multi-node software deployment, ad hoc task execution, and configuration management.
 
-Don't worry you don't have to be expert on any of these tools.
+Don't worry you don't have to be expert on any of these dependencies.
+<br>
 ### 1. Install virtualbox :
 
 **1.1 Install virtualbox on Ubuntu:**
@@ -22,11 +31,11 @@ Don't worry you don't have to be expert on any of these tools.
 ```shell
 $ wget -q -O - http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc | sudo apt-key add -
 
-$ sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian `lsb_release -sc` non-free contrib" > /etc/apt/sources.list.d/virtualbox.org.list' 
+$ sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian `lsb_release -sc` non-free contrib" > /etc/apt/sources.list.d/virtualbox.org.list'
 
 $ sudo apt-get update
-	
-$ sudo apt-get install dkms 
+
+$ sudo apt-get install dkms
 
 $ sudo apt-get install virtualbox-5.1
 ```
@@ -47,6 +56,7 @@ $ sudo wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
 
 $ sudo yum install VirtualBox-5.1
 ```
+<br>
 ### 2. Install vagrant :
 
 **2.1 Install vagrant on Debian-based Linux Ubuntu/Mint (64-bit):**
@@ -76,6 +86,7 @@ $ wget https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_i686.rpm
 
 $ sudo rpm -ivh vagrant_1.8.5_i686.rpm
 ```
+<br>
 ### 3. Install ansible :
 **3.1 Install ansible on Debian-based distributions (Ubuntu/Mint):**
 ```shell
@@ -94,14 +105,7 @@ $ sudo easy_install pip
 
 $ sudo pip install ansible netaddr
 ```
-
-## Get environment
-```shell
-$ git clone https://github.com/AnwarYagoub/RHCSA-RHCE-Lab-Environment.git
-
-$ cd RHCSA-RHCE-Lab-Environment
-```
-
+<br>
 ## How to start servers?
 Navigate to project path where Vagranfile exists.
 
@@ -117,7 +121,7 @@ replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
 ```shell
 $ vagrant up server1
 ```
-
+<br>
 ## How to access servers?
 Navigate to project path where Vagranfile exists.
 
@@ -129,11 +133,11 @@ replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
 ```shell
 $ vagrant ssh server1
 ```
-- You can also access servers using ip addresses listed below.
+- You can also access servers using ip addresses listed above.
 ```shell
-$ vagrant ssh user@192.168.122.120
+$ vagrant ssh user@192.168.4.120
 ```
-
+<br>
 ## How to stop servers?
 Navigate to project path where Vagranfile exists.
 
@@ -145,16 +149,7 @@ $ vagrant halt
 ```shell
 $ vagrant halt MACHINE_NAME
 ```
-replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
+replace **MACHINE_NAME** with any of (server1, server2, cache-server, freeipa)
 ```shell
 $ vagrant halt server1
 ```
-
-
-## IP addresses & credentials
-| Server | IP address | username | password |
-|---|---|:---:|:---:|
-|cache-server|192.168.122.100 |vagrant|vagrant|
-|server1|192.168.122.210|user|password|
-|server2|192.168.122.220|user|password|
-|FreeIPA|192.168.122.200|user|password|

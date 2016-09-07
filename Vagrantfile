@@ -5,12 +5,13 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vbguest.auto_update = false
 
   # configure cache-server machine
   config.vm.define "cache-server" do |node|
     node.vm.box = "debian/jessie64"
     node.vm.hostname = "cache-server.example.com"
-    node.vm.network "private_network", ip: "192.168.122.100"
+    node.vm.network "private_network", ip: "192.168.4.100"
     node.vm.provider "virtualbox" do |vb|
       vb.memory = "512"
       vb.name = "cache-server"
@@ -20,6 +21,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+  config.ssh.insert_key = false # for vagrant 1.8.5 see https://github.com/mitchellh/vagrant/issues/7610#issuecomment-234609660
   # configure two machines server1 & server2
   (1..2).each do |i|
     config.vm.define "server#{i}" do |node|
@@ -27,7 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # machine basic settings
       node.vm.box = "centos/7"
       node.vm.hostname = "server#{i}.example.com"
-      node.vm.network "private_network", ip: "192.168.122.2#{i}0"
+      node.vm.network "private_network", ip: "192.168.4.2#{i}0"
 
       # provider specific settings
       node.vm.provider "virtualbox" do |vb|
@@ -56,19 +58,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # configure FreeIPA machine
-  config.vm.define "FreeIPA" do |node|
+  config.vm.define "freeipa" do |node|
     # machine basic settings
     node.vm.box = "centos/7"
     node.vm.hostname = "ipa"
-    node.vm.network "private_network", ip: "192.168.122.200"
+    node.vm.network "private_network", ip: "192.168.4.200"
     # provider specific settings
     node.vm.provider "virtualbox" do |vb|
       vb.memory = "2048"
-      vb.name = "FreeIPA"
+      vb.name = "freeipa"
       vb.gui = true
     end
     # provision machine using ansible
-    node.vm.provision "ansible" do |ansible|
+    node.vm.provision :ansible do |ansible|
       ansible.playbook = "provisioning/freeipa.yml"
     end
   end

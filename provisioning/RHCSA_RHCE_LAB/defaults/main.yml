@@ -5,4 +5,3 @@ network_interfaces:
   - eth0
   - eth1
 primary_dns: 8.8.8.8
-secondary_dns: 8.8.4.4

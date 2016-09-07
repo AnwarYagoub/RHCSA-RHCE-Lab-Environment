@@ -1,8 +1,37 @@
 ---
+# epel-release needs to be installed before installing bash-completion, haveged etc.
+- name: enable Extra Packages for Enterprise Linux (epel)
+  yum:
+    name: epel-release
+    state: present
+
+- name: Install Bash Completion (for nmcli)
+  yum: name={{ item }} state=present
+  with_items:
+    - libselinux-python
+    - python-pip # for tzupdate
+    - bash-completion
+    - bash-completion-extras
+    - dbus # for ansible nmcli http://docs.ansible.com/ansible/nmcli_module.html
+  notify: update pip
+
+- name: install tzupdate
+  pip:
+    name: tzupdate
+- name: set timezone based on geolocation
+  # see https://github.com/cdown/tzupdate TODO CentOS GUI can be set to detect timezone, but how can we set this automated?
+  shell: tzupdate
+
+
 - name: "Install 'Server With GUI' environment group"
   yum:
     name="@^Server With GUI"
     state="present"
+  notify: Upgrade packages
+
+- name: change system's runlevel to runlevel 5
+  shell: systemctl set-default graphical.target
+  #TODO ";startx" waits forever. We should do an reboot anyways
 
 - name: "Add user account & set its password"
   user:
@@ -24,12 +53,10 @@
   with_items: "{{ network_interfaces }}"
   notify: restart network
 
-- name: "Set primary & secondary DNS in network interface conf file"
+- name: "Set primary DNS in network interface conf file"
   blockinfile:
     dest: "/etc/sysconfig/network-scripts/ifcfg-{{ item }}"
     insertafter: "PEERDNS=no"
-    block: |
-      DNS1={{ primary_dns }}
-      DNS2={{ secondary_dns }}
+    block: DNS1={{ primary_dns }}
   with_items: "{{ network_interfaces }}"
   notify: restart network
