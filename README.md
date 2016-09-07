@@ -15,7 +15,7 @@ This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert 
 - [Ansible](https://www.ansible.com):  free-software platform for configuring and managing computers which combines multi-node software deployment, ad hoc task execution, and configuration management.
 
 Don't worry you don't have to be expert on any of these tools.
-<br>
+
 ### 1. Install virtualbox :
 
 **1.1 Install virtualbox on Ubuntu:**
@@ -48,7 +48,7 @@ $ sudo wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo
 
 $ sudo yum install VirtualBox-5.1
 ```
-<br>
+
 ### 2. Install vagrant :
 
 **2.1 Install vagrant on Debian-based Linux Ubuntu/Mint (64-bit):**
@@ -78,7 +78,7 @@ $ wget https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_i686.rpm
 
 $ sudo rpm -ivh vagrant_1.8.5_i686.rpm
 ```
-<br>
+
 ### 3. Install ansible :
 **3.1 Install ansible on Debian-based distributions (Ubuntu/Mint):**
 ```shell
@@ -97,7 +97,15 @@ $ sudo easy_install pip
 
 $ sudo pip install ansible netaddr
 ```
-<br>
+
+## Get environment
+```shell
+$ git clone https://github.com/AnwarYagoub/RHCSA-RHCE-Lab-Environment.git
+
+$ cd RHCSA-RHCE-Lab-Environment
+```
+
+
 ## How to start servers?
 Navigate to project path where Vagranfile exists.
 
@@ -113,7 +121,7 @@ replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
 ```shell
 $ vagrant up server1
 ```
-<br>
+
 ## How to access servers?
 Navigate to project path where Vagranfile exists.
 
@@ -129,7 +137,7 @@ $ vagrant ssh server1
 ```shell
 $ vagrant ssh user@192.168.4.120
 ```
-<br>
+
 ## How to stop servers?
 Navigate to project path where Vagrantfile exists.
 
