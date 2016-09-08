@@ -1,7 +1,7 @@
 # Red Hat RHCSA-RHCE 7 Cert Guide (Lab Environment)
 
 ## About
-This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert Guide: Red Hat Enterprise Linux 7** book written  by Sander Van Vugt.
+This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert Guide: Red Hat Enterprise Linux 7** book written by Sander van Vugt.
 
 ## What is included?
 - server1: CentOS box (Server With GUI).
@@ -9,9 +9,9 @@ This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert 
 - cache-server: Debian box used for package caching.
 - FreeIPA: CentOS box with FreeIPA configured.
 
-## Install dependencies:
+## install dependencies:
 - [Virtualbox](https://www.virtualbox.org): cross-platform virtualization application.
-- [Vagrant](https://www.vagrantup.com): tool for building complete development environments. With an easy-to-use workflow and focus on automation 
+- [Vagrant](https://www.vagrantup.com): tool for building complete development environments. With an easy-to-use workflow and focus on automation
 - [Ansible](https://www.ansible.com):  free-software platform for configuring and managing computers which combines multi-node software deployment, ad hoc task execution, and configuration management.
 
 Don't worry you don't have to be expert on any of these tools.
@@ -22,11 +22,11 @@ Don't worry you don't have to be expert on any of these tools.
 ```shell
 $ wget -q -O - http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc | sudo apt-key add -
 
-$ sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian `lsb_release -sc` non-free contrib" > /etc/apt/sources.list.d/virtualbox.org.list' 
+$ sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian `lsb_release -sc` non-free contrib" > /etc/apt/sources.list.d/virtualbox.org.list'
 
 $ sudo apt-get update
-	
-$ sudo apt-get install dkms 
+
+$ sudo apt-get install dkms
 
 $ sudo apt-get install virtualbox-5.1
 ```
@@ -101,7 +101,6 @@ $ git clone https://github.com/AnwarYagoub/RHCSA-RHCE-Lab-Environment.git
 
 $ cd RHCSA-RHCE-Lab-Environment
 ```
-
 ## How to start servers?
 Navigate to project path where Vagranfile exists.
 
@@ -117,7 +116,6 @@ replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
 ```shell
 $ vagrant up server1
 ```
-
 ## How to access servers?
 Navigate to project path where Vagranfile exists.
 
@@ -131,11 +129,10 @@ $ vagrant ssh server1
 ```
 - You can also access servers using ip addresses listed below.
 ```shell
-$ vagrant ssh user@192.168.122.120
+ssh root@192.168.4.210
 ```
-
 ## How to stop servers?
-Navigate to project path where Vagranfile exists.
+Navigate to project path where Vagrantfile exists.
 
 - stop all servers
 ```shell
@@ -145,11 +142,10 @@ $ vagrant halt
 ```shell
 $ vagrant halt MACHINE_NAME
 ```
-replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
+replace **MACHINE_NAME** with any of (server1, server2, cache-server, freeipa)
 ```shell
 $ vagrant halt server1
 ```
-
 
 ## IP addresses & credentials
 | Server | IP address | username | password |

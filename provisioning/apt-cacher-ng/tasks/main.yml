@@ -3,16 +3,17 @@
   apt:
     name="apt-cacher-ng"
     state="present"
+- name: "Install curl"
+  apt:
+    name="curl"
+    state="present"
+#TODO update to ansible native & remove shell commands
+- name: Download list of CentOS mirrors
+  # see https://www.pitt-pladdy.com/blog/_20150720-132951_0100_Home_Lab_Project_apt-cacher-ng_with_CentOS/
+  shell: "curl -S https://www.centos.org/download/full-mirrorlist.csv | sed 's/^.*\"http:/http:/' | sed 's/\".*$//' | grep ^http >/etc/apt-cacher-ng/centos_mirrors"
 
-- name: "Copy CentOS mirros list to /etc/apt-cacher-ng directory"
-  copy:
-    src="files/centos_mirrors"
-    dest="/etc/apt-cacher-ng/centos_mirrors"
-    owner="root"
-    group="root"
-    mode="644"
-  when: add_centos_support == true
-  notify: restart apt-cacher-ng
+- name: Download list of EPEL-7 mirrors
+  shell: 'curl -s -S https://mirrors.fedoraproject.org/mirrorlist?repo=epel-7\&arch=x86_64\&country=global -o /etc/apt-cacher-ng/epel_mirrors'
 
 - name: "Add Remap option for CentOS to /etc/apt-cacher-ng/acng.conf"
   lineinfile:
@@ -33,6 +34,18 @@
   when: add_centos_support == true
   notify: restart apt-cacher-ng
 
+- name: "Allow HTTPS data pass-through mode to /etc/apt-cacher-ng/acng.conf"
+# see https://www.pitt-pladdy.com/blog/_20150720-132951_0100_Home_Lab_Project_apt-cacher-ng_with_CentOS/
+  lineinfile:
+    '
+    dest="/etc/apt-cacher-ng/acng.conf"
+    insertafter="^# PassThroughPattern: .* # this would allow CONNECT to everything"
+    line="PassThroughPattern: (mirrors\.fedoraproject\.org|dl\.fedoraproject\.org):443"
+    '
+  when: add_centos_support == true
+  notify: restart apt-cacher-ng
+
+# TODO ExTreshold: 4 --> ExTreshold: 30 in /etc/apt-cacher-ng/acng.conf
 - name: "Start apt-cacher-ng service & enable it during startup"
   service:
     name="apt-cacher-ng"
