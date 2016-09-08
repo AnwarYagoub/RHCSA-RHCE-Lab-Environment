@@ -150,7 +150,7 @@ $ vagrant halt server1
 ## IP addresses & credentials
 | Server | IP address | username | password |
 |---|---|:---:|:---:|
-|cache-server|192.168.122.100 |vagrant|vagrant|
-|server1|192.168.122.210|user|password|
-|server2|192.168.122.220|user|password|
-|FreeIPA|192.168.122.200|user|password|
+|cache-server|192.168.4.100 |vagrant|vagrant|
+|server1|192.168.4.210|user|password|
+|server2|192.168.4.220|user|password|
+|FreeIPA|192.168.4.200|user|password|
