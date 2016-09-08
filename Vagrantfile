@@ -21,7 +21,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.ssh.insert_key = false # for vagrant 1.8.5 see https://github.com/mitchellh/vagrant/issues/7610#issuecomment-234609660
   # configure two machines server1 & server2
   (1..2).each do |i|
     config.vm.define "server#{i}" do |node|

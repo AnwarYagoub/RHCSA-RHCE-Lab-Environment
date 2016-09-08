@@ -6,4 +6,8 @@
   yum:
     name="*"
     state="latest"
-  # notify: reboot TODO 
+  # notify: reboot TODO
+- name: restart sshd
+  service:
+    name: sshd
+    state: restarted

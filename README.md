@@ -129,7 +129,7 @@ $ vagrant ssh server1
 ```
 - You can also access servers using ip addresses listed below.
 ```shell
-$ vagrant ssh user@192.168.4.120
+ssh root@192.168.4.210
 ```
 ## How to stop servers?
 Navigate to project path where Vagrantfile exists.

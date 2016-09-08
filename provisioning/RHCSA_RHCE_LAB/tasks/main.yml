@@ -60,3 +60,11 @@
     block: DNS1={{ primary_dns }}
   with_items: "{{ network_interfaces }}"
   notify: restart network
+
+# sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+- name: allow ssh logon with password
+  replace:
+    dest: /etc/ssh/sshd_config
+    regexp: ^PasswordAuthentication no
+    replace: PasswordAuthentication yes
+  notify: restart sshd
