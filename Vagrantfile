@@ -8,6 +8,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   if defined? VagrantVbguest
         config.vbguest.auto_update = false
   end
+  ENV['LC_ALL']="en_US.UTF-8"
+  ENV['LANG']="en_US.UTF-8"
   # configure cache-server machine
   config.vm.define "cache-server" do |node|
     node.vm.box = "debian/jessie64"
@@ -29,8 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # machine basic settings
       node.vm.box = "centos/7"
       node.vm.hostname = "server#{i}.example.com"
-      node.vm.network "private_network", ip: "192.168.4.2#{i}0"
-
+      node.vm.network "private_network", ip: "192.168.4.2#{i}0", auto_config: false
       # provider specific settings
       node.vm.provider "virtualbox" do |vb|
         vb.memory = "1024"
@@ -51,6 +52,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       # provision machine using ansible
       node.vm.provision "ansible" do |ansible|
+        ansible.host_vars = { "server#{i}" => { "private_ip_address" => "192.168.4.2#{i}0" } }
         ansible.playbook = "provisioning/servers.yml"
       end
 
@@ -62,7 +64,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # machine basic settings
     node.vm.box = "centos/7"
     node.vm.hostname = "ipa"
-    node.vm.network "private_network", ip: "192.168.4.200"
+    node.vm.network "private_network", ip: "192.168.4.200", auto_config: false
     # provider specific settings
     node.vm.provider "virtualbox" do |vb|
       vb.memory = "2048"
@@ -71,6 +73,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
     # provision machine using ansible
     node.vm.provision :ansible do |ansible|
+      ansible.host_vars = { "freeipa" => { "private_ip_address" => "192.168.4.200" } }
       ansible.playbook = "provisioning/freeipa.yml"
     end
   end

@@ -12,32 +12,27 @@
     - python-pip # for tzupdate
     - bash-completion
     - bash-completion-extras
-    - dbus # for ansible nmcli http://docs.ansible.com/ansible/nmcli_module.html
   notify: update pip
 
-- name: install tzupdate
+- name: pip install tzupdate
   pip:
     name: tzupdate
 - name: set timezone based on geolocation
   # see https://github.com/cdown/tzupdate TODO CentOS GUI can be set to detect timezone, but how can we set this automated?
   shell: tzupdate
 
-
 - name: "Install 'Server With GUI' environment group"
   yum:
     name="@^Server With GUI"
     state="present"
-  notify: Upgrade packages
-
-- name: change system's runlevel to runlevel 5
-  shell: systemctl set-default graphical.target
-  #TODO ";startx" waits forever. We should do an reboot anyways
+  when: gui == true
+  notify: runlevel 5
 
 - name: "Add user account & set its password"
   user:
     name="{{ default_user_name }}"
     groups="wheel"
-    password="{{ defaul_user_password }}"
+    password="{{ default_user_password }}"
     update_password="always"
 
 - name: "change root password"
@@ -48,18 +43,24 @@
 
 - name: "Add PEERDNS=no option"
   lineinfile:
-    dest="/etc/sysconfig/network-scripts/ifcfg-{{ item }}"
+    dest="/etc/sysconfig/network-scripts/ifcfg-eth0"
     line="PEERDNS=no"
-  with_items: "{{ network_interfaces }}"
   notify: restart network
 
-- name: "Set primary DNS in network interface conf file"
-  blockinfile:
-    dest: "/etc/sysconfig/network-scripts/ifcfg-{{ item }}"
-    insertafter: "PEERDNS=no"
-    block: DNS1={{ primary_dns }}
-  with_items: "{{ network_interfaces }}"
+- name: Check exists /etc/sysconfig/network-scripts/ifcfg-eth1
+  stat:
+    path: /etc/sysconfig/network-scripts/ifcfg-eth1
+  register: ifcfg_eth1_state
+
+- name: modify private connection
+  shell: nmcli connection modify Wired\ connection\ 1 connection.id eth1 ipv4.addresses {{ private_ip_address }}/24 ipv4.dns {{ primary_dns }} ipv4.method manual ipv6.method ignore
   notify: restart network
+  when: ifcfg_eth1_state.stat.exists == false
+
+- name: name private connection 'System eth1'
+  shell: nmcli connection modify eth1 connection.id System\ eth1
+  notify: restart network
+  when: ifcfg_eth1_state.stat.exists == false
 
 # sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
 - name: allow ssh logon with password
@@ -68,3 +69,8 @@
     regexp: ^PasswordAuthentication no
     replace: PasswordAuthentication yes
   notify: restart sshd
+
+ # support 'scp labipa.example.com:/etc/ipa/ca.crt /etc/openldap/cacerts/' p145
+- name: make /etc/openldap/cacerts directory
+  file: /etc/openldap/cacerts
+    state: directory
