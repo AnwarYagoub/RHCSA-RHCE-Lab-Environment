@@ -31,6 +31,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # machine basic settings
       node.vm.box = "centos/7"
       node.vm.hostname = "server#{i}.example.com"
+      # yes this is a bug in Vagrant: we need to provide the ip-address even if auto_config doesn't use it
       node.vm.network "private_network", ip: "192.168.4.2#{i}0", auto_config: false
       # provider specific settings
       node.vm.provider "virtualbox" do |vb|
