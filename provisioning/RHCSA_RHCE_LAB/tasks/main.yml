@@ -16,8 +16,9 @@
 - name: pip install tzupdate
   pip:
     name: tzupdate
+
+# see https://github.com/cdown/tzupdate TODO CentOS GUI can be set to detect timezone, but how can we set this automated?
 - name: set timezone based on geolocation
-  # see https://github.com/cdown/tzupdate TODO CentOS GUI can be set to detect timezone, but how can we set this automated?
   shell: /bin/sleep 15; tzupdate # sleep prevents Python error when running tzupdate immediate after install
   async: 60 # takes quite some time
   poll: 0 # we don't need to wait for this to finish

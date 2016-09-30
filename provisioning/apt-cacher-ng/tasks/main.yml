@@ -8,8 +8,8 @@
     name="curl"
     state="present"
 #TODO update to ansible native & remove shell commands
+# see https://www.pitt-pladdy.com/blog/_20150720-132951_0100_Home_Lab_Project_apt-cacher-ng_with_CentOS/
 - name: Download list of CentOS mirrors
-  # see https://www.pitt-pladdy.com/blog/_20150720-132951_0100_Home_Lab_Project_apt-cacher-ng_with_CentOS/
   shell: "curl -S https://www.centos.org/download/full-mirrorlist.csv | sed 's/^.*\"http:/http:/' | sed 's/\".*$//' | grep ^http >/etc/apt-cacher-ng/centos_mirrors"
 
 - name: Download list of EPEL-7 mirrors
@@ -34,8 +34,8 @@
   when: add_centos_support == true
   notify: restart apt-cacher-ng
 
-- name: "Allow HTTPS data pass-through mode to /etc/apt-cacher-ng/acng.conf"
 # see https://www.pitt-pladdy.com/blog/_20150720-132951_0100_Home_Lab_Project_apt-cacher-ng_with_CentOS/
+- name: "Allow HTTPS data pass-through mode to /etc/apt-cacher-ng/acng.conf"
   lineinfile:
     '
     dest="/etc/apt-cacher-ng/acng.conf"

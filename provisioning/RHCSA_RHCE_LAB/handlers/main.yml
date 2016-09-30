@@ -5,6 +5,7 @@
 - name: runlevel 5
   shell: systemctl set-default graphical.target
   # notify: reboot TODO
+
 - name: restart sshd
   service:
     name: sshd
