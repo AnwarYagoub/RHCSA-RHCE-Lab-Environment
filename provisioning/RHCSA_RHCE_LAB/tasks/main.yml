@@ -18,7 +18,9 @@
     name: tzupdate
 - name: set timezone based on geolocation
   # see https://github.com/cdown/tzupdate TODO CentOS GUI can be set to detect timezone, but how can we set this automated?
-  shell: tzupdate
+  shell: /bin/sleep 15; tzupdate # sleep prevents Python error when running tzupdate immediate after install
+  async: 60 # takes quite some time
+  poll: 0 # we don't need to wait for this to finish
 
 # TODO labipa boots with GUI, install GUI on Server1 but boot in multi-user.target and on Server2 do not install GUI.
 - name: "Install 'Server With GUI' environment group"
@@ -72,5 +74,6 @@
 
  # support 'scp labipa.example.com:/etc/ipa/ca.crt /etc/openldap/cacerts/' p145
 - name: make /etc/openldap/cacerts directory
-  file: /etc/openldap/cacerts
+  file:
+    path: /etc/openldap/cacerts
     state: directory
