@@ -38,6 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.memory = "1024"
         # Get disk path
         vb.name = "server#{i}"
+        vb.gui = true
         line = `VBoxManage list systemproperties | grep "Default machine folder"`
         vb_machine_folder = line.split(':')[1].strip()
         disk_name = "disk2.vdi"

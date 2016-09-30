@@ -2,10 +2,6 @@
 - name: update pip
   shell: pip install --upgrade pip
 
-- name: runlevel 5
-  shell: systemctl set-default graphical.target
-  # notify: reboot TODO
-
 - name: restart sshd
   service:
     name: sshd
