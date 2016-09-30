@@ -1,11 +1,4 @@
 ---
-- name: has language been set?
-  stat: path=/etc/profile.d/custom.sh
-  register: custom_sh
-- name: set language to en_US.utf8, overrides centos geolocation
-  shell: "export LANG=en_US.utf8; localectl set-locale LANG=en_US.utf8; echo 'export LANG=en_US.utf8\nexport LC_ALL=en_US.utf8' > /etc/profile.d/custom.sh; chmod +x /etc/profile.d/custom.sh"
-  when: custom_sh.stat.islnk is not defined
-
 #TODO test avalability of cache-server
 - name: Enable use of cache-server
   blockinfile:
