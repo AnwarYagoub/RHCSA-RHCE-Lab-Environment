@@ -14,8 +14,3 @@
     block: "proxy=http://{{ cache_server_ip }}:{{ cache_server_port }}"
     state: absent
   when: use_cache_server == false
-
-- name: "Upgrade packages"
-  yum:
-    name="*"
-    state="latest"

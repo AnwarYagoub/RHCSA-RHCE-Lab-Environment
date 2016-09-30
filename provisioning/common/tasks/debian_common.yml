@@ -13,8 +13,3 @@
   with_items:
     - python-apt
     - aptitude
-
-- name: "Upgrade packages"
-  apt:
-    update_cache="yes"
-    upgrade="yes"
