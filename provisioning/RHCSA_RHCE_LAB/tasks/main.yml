@@ -28,8 +28,12 @@
   yum:
     name="@^Server With GUI"
     state="present"
-  when: gui == true
-  notify: runlevel 5
+  when: inventory_hostname == "server1" or inventory_hostname == "freeipa"
+
+- name: "Set graphical target (runlevel 5) as default"
+  shell: systemctl set-default graphical.target
+  when: inventory_hostname == "freeipa"
+  # notify: reboot TODO
 
 - name: "Add user account & set its password"
   user:
