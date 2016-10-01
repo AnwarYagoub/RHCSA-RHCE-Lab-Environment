@@ -1,4 +1,12 @@
 ---
+# sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+- name: allow ssh logon with password
+  replace:
+    dest: /etc/ssh/sshd_config
+    regexp: ^PasswordAuthentication no
+    replace: PasswordAuthentication yes
+  notify: restart sshd
+
 # epel-release needs to be installed before installing bash-completion, haveged etc.
 - name: enable Extra Packages for Enterprise Linux (epel)
   yum:
@@ -23,7 +31,7 @@
   async: 60 # takes quite some time
   poll: 0 # we don't need to wait for this to finish
 
-# TODO labipa boots with GUI, install GUI on Server1 but boot in multi-user.target and on Server2 do not install GUI.
+# TODO GUI boots first time with 'License not accepted' see https://bugs.centos.org/view.php?id=7177
 - name: "Install 'Server With GUI' environment group"
   yum:
     name="@^Server With GUI"
@@ -68,14 +76,6 @@
   shell: nmcli connection modify eth1 connection.id System\ eth1
   notify: restart network
   when: ifcfg_eth1_state.stat.exists == false
-
-# sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
-- name: allow ssh logon with password
-  replace:
-    dest: /etc/ssh/sshd_config
-    regexp: ^PasswordAuthentication no
-    replace: PasswordAuthentication yes
-  notify: restart sshd
 
  # support 'scp labipa.example.com:/etc/ipa/ca.crt /etc/openldap/cacerts/' p145
 - name: make /etc/openldap/cacerts directory
