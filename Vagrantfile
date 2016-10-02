@@ -5,11 +5,16 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  # if vagrant-vbguest is installed stop auto updating virtualbox guest add-on update
   if defined? VagrantVbguest
-        config.vbguest.auto_update = false
+    config.vbguest.auto_update = false
   end
+
+  # Set language locale environment variables
   ENV['LC_ALL']="en_US.UTF-8"
   ENV['LANG']="en_US.UTF-8"
+
   # configure cache-server machine
   config.vm.define "cache-server" do |node|
     node.vm.box = "debian/jessie64"
