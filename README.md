@@ -7,7 +7,7 @@ This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert 
 - server1: CentOS box (Server With GUI).
 - server2: same as Server1
 - cache-server: Debian box used for package caching.
-- FreeIPA: CentOS box with FreeIPA configured.
+- labipa: CentOS box with labipa configured.
 
 ## install dependencies:
 - [Virtualbox](https://www.virtualbox.org): cross-platform virtualization application.
@@ -112,7 +112,7 @@ $ vagrant up
 ```shell
 $ vagrant up MACHINE_NAME
 ```
-replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
+replace **MACHINE_NAME** with any of (server1, server2, cache-server, labipa)
 ```shell
 $ vagrant up server1
 ```
@@ -123,7 +123,7 @@ Navigate to project path where Vagranfile exists.
 ```shell
 $ vagrant ssh MACHINE_NAME
 ```
-replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
+replace **MACHINE_NAME** with any of (server1, server2, cache-server, labipa)
 ```shell
 $ vagrant ssh server1
 ```
@@ -142,7 +142,7 @@ $ vagrant halt
 ```shell
 $ vagrant halt MACHINE_NAME
 ```
-replace **MACHINE_NAME** with any of (server1, server2, cache-server, freeipa)
+replace **MACHINE_NAME** with any of (server1, server2, cache-server, labipa)
 ```shell
 $ vagrant halt server1
 ```
@@ -153,4 +153,4 @@ $ vagrant halt server1
 |cache-server|192.168.4.100 |vagrant|vagrant|
 |server1|192.168.4.210|user|password|
 |server2|192.168.4.220|user|password|
-|FreeIPA|192.168.4.200|user|password|
+|labipa|192.168.4.200|user|password|
