@@ -1,23 +1,10 @@
 ---
-- name: "Set host name"
-  hostname:
-    name="{{ ipa_fqdn }}"
-- name: "Update /etc/hosts"
-  lineinfile:
-    dest="/etc/hosts"
-    line="{{ ipa_ip }}\t{{ ipa_fqdn }}\t{{ ipa_hostname }}"
-- name: remove 127.0.0.1\tipa\tipa from /etc/hosts
-  lineinfile:
-    dest="/etc/hosts"
-    line="127.0.0.1\tipa\tipa"
-    state=absent
-
 - name: "Set SELinux to permissive"
   selinux:
     policy="targeted"
     state="permissive"
 
-- name: "Install FreeIPA packages"
+- name: "Install labipa packages"
   yum:
     name="{{ item }}"
     state="present"
@@ -36,12 +23,12 @@
 - name: reconnect 'System eth1' to eth1
   shell: nmcli dev disconnect eth1;nmcli con up System\ eth1
 
-- name: "Check if FreeIPA is already installed"
+- name: "Check if labipa is already installed"
   stat:
     path="/root/cacert.p12"
-  register: freeipa_status
+  register: labipa_status
 
-- name: "Configure FreeIPA server"
+- name: "Configure labipa server"
   shell:
     "
     ipa-server-install \
@@ -50,15 +37,11 @@
     	--realm={{ ipa_realm }} \
     	--ds-password={{ ldap_directory_manager_password }} \
     	--admin-password={{ ipa_admin_password }} \
-    	--forwarder={{ primary_dns }} \
+    	--forwarder={{ ansible_dns.nameservers[0] }} \
     	--reverse-zone={{ reverse_dns }} \
     	--unattended
     "
-  when: freeipa_status.stat.exists == false
-
-  # TODO check whether this is needed
-- name: point to local dns
-  shell: nmcli connection modify System\ eth1 ipv4.dns {{ ipa_ip }};nmcli dev disconnect eth1;nmcli con up System\ eth1
+  when: labipa_status.stat.exists == false
 
 - name: "Start & Enable krb5kdc/firewalld services"
   service:

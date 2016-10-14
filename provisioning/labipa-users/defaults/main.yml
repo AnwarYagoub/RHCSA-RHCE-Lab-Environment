@@ -1,4 +1,4 @@
-freeipa_users:
+labipa_users:
   - { user: "lisa", first: "lisa", last: "doe" }
   - { user: "linda", first: "linda", last: "doe" }
   - { user: "thomsen", first: "thomsen", last: "doe" }
