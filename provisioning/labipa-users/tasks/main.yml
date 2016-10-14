@@ -22,14 +22,14 @@
     path="/var/ftp/pub/cacert.p12"
   register: cacert_state
 
-- name: "Copy labipa certificate authority file to /var/ftp/pub"
+- name: "Copy FreeIPA certificate authority file to /var/ftp/pub"
   shell: cp /root/cacert.p12 /var/ftp/pub
   when: cacert_state.stat.exists == false
 
 - name: "Obtain TGT for admin user"
   shell: echo "{{ ipa_admin_password }}" | kinit admin
 
-- name: "Add user to labipa"
+- name: "Add user to FreeIPA"
   shell: echo $'{{ ipa_admin_password }}\n{{ ipa_admin_password }}' | ipa user-add {{ item.user }} --first {{ item.first }} --last {{ item.last }} --password; sleep 1;echo $'{{ ipa_admin_password }}\n{{ ipa_admin_password }}\n{{ ipa_admin_password }}'| kinit {{ item.user }};echo $'{{ ipa_admin_password }}'| kinit admin
   with_items: "{{ labipa_users }}"
   register: output
