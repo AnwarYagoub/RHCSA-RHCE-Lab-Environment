@@ -7,7 +7,7 @@ This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert 
 - server1: CentOS box (Server With GUI).
 - server2: same as Server1
 - cache-server: Debian box used for package caching.
-- labipa: CentOS box with labipa configured.
+- labipa: CentOS box with FreeIPA configured.
 
 ## install dependencies:
 - [Virtualbox](https://www.virtualbox.org): cross-platform virtualization application.
