@@ -1,6 +1,40 @@
 ---
 #TODO always returns succeeded
 # sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
+- name: update private ipv4 address in /etc/hosts
+  lineinfile: dest=/etc/hosts
+    regexp="127.0.0.1\t{{ ansible_fqdn }}"
+    backrefs="yes"
+    line="{{ private_ipv4_address }}\t{{ ansible_fqdn }}\t{{ ansible_hostname }}"
+
+- name: add private ipv6 address to /etc/hosts
+  lineinfile: dest=/etc/hosts
+    line="{{ private_ipv6_address }}\t{{ ansible_fqdn }}\t{{ ansible_hostname }}"
+
+- name: "Add PEERDNS=no option"
+  lineinfile:
+    dest="/etc/sysconfig/network-scripts/ifcfg-eth0"
+    line="PEERDNS=no"
+  notify: restart network
+
+- name: Check exists /etc/sysconfig/network-scripts/ifcfg-eth1
+  stat:
+    path: /etc/sysconfig/network-scripts/ifcfg-eth1
+  register: ifcfg_eth1_state
+
+- name: modify private connection
+  shell: nmcli connection modify Wired\ connection\ 1 connection.id eth1 ipv4.addresses {{ private_ipv4_address }}/24 ipv4.dns {{ ipa_ipv4 }} ipv6.addresses {{ private_ipv6_address }}/24 ipv6.dns {{ ipa_ipv6 }} ipv4.method manual ipv6.method manual
+  when: ifcfg_eth1_state.stat.exists == false
+
+- name: name private connection 'System eth1'
+  shell: nmcli connection modify eth1 connection.id System\ eth1
+  when: ifcfg_eth1_state.stat.exists == false
+
+  # https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Network_Configuration_Using_sysconfig_Files.html
+- name: apply connection settings to eth1
+  shell: nmcli dev disconnect eth1;nmcli con up System\ eth1
+  when: ifcfg_eth1_state.stat.exists == false
+
 - name: allow ssh logon with password
   replace:
     dest: /etc/ssh/sshd_config
@@ -14,15 +48,18 @@
     state: restarted
   when: allow_ssh_password|succeeded
 
-- name: update private ipv4 address in /etc/hosts
-  lineinfile: dest=/etc/hosts
-    regexp="127.0.0.1\t{{ ansible_fqdn }}"
-    backrefs="yes"
-    line="{{ private_ipv4_address }}\t{{ ansible_fqdn }}\t{{ ansible_hostname }}"
+- name: "Add user account & set its password"
+  user:
+    name="{{ default_user_name }}"
+    groups="wheel"
+    password="{{ default_user_password }}"
+    update_password="always"
 
-- name: add private ipv6 address to /etc/hosts
-  lineinfile: dest=/etc/hosts
-    line="{{ private_ipv6_address }}\t{{ ansible_fqdn }}\t{{ ansible_hostname }}"
+- name: "change root password"
+  user:
+    name="root"
+    password="{{ root_user_password }}"
+    update_password="always"
 
 # python-pip & haveged are part of the community repository epel-release
 - name: enable Extra Packages for Enterprise Linux (epel)
@@ -59,42 +96,6 @@
   shell: systemctl set-default graphical.target
   when: inventory_hostname_short == "labipa"
   # notify: reboot TODO, for now do a 'vagrant reload' after provisioning
-
-- name: "Add user account & set its password"
-  user:
-    name="{{ default_user_name }}"
-    groups="wheel"
-    password="{{ default_user_password }}"
-    update_password="always"
-
-- name: "change root password"
-  user:
-    name="root"
-    password="{{ root_user_password }}"
-    update_password="always"
-
-- name: "Add PEERDNS=no option"
-  lineinfile:
-    dest="/etc/sysconfig/network-scripts/ifcfg-eth0"
-    line="PEERDNS=no"
-  notify: restart network
-
-- name: Check exists /etc/sysconfig/network-scripts/ifcfg-eth1
-  stat:
-    path: /etc/sysconfig/network-scripts/ifcfg-eth1
-  register: ifcfg_eth1_state
-
-- name: modify private connection
-  shell: nmcli connection modify Wired\ connection\ 1 connection.id eth1 ipv4.addresses {{ private_ipv4_address }}/24 ipv4.dns {{ ipa_ipv4 }} ipv6.addresses {{ private_ipv6_address }}/24 ipv6.dns {{ ipa_ipv6 }} ipv4.method manual ipv6.method manual
-  when: ifcfg_eth1_state.stat.exists == false
-
-- name: name private connection 'System eth1'
-  shell: nmcli connection modify eth1 connection.id System\ eth1
-  when: ifcfg_eth1_state.stat.exists == false
-
-- name: apply connection settings to eth1
-  shell: nmcli dev disconnect eth1;nmcli con up System\ eth1
-  when: ifcfg_eth1_state.stat.exists == false
 
 # support 'scp labipa.example.com:/etc/ipa/ca.crt /etc/openldap/cacerts/' p145
 - name: make /etc/openldap/cacerts directory
