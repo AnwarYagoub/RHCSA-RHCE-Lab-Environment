@@ -24,12 +24,31 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
+    # configure labipa machine
+    config.vm.define "labipa" do |node|
+      # machine basic settings
+      node.vm.box = "centos/7"
+      node.vm.hostname = "labipa.example.com"
+      node.vm.network "private_network", ip: "192.168.4.200", auto_config: false
+      # provider specific settings
+      node.vm.provider "virtualbox" do |vb|
+        vb.memory = "2048"
+        vb.name = "labipa"
+      end
+      # provision machine using ansible
+      node.vm.provision :ansible do |ansible|
+        ansible.host_vars = { "labipa" => { "private_ipv4_address" => "192.168.4.200" , "private_ipv6_address" => "fd00::200" }}
+        ansible.playbook = "provisioning/labipa.yml"
+      end
+    end
+
   # configure two machines server1 & server2
   (1..2).each do |i|
     config.vm.define "server#{i}" do |node|
 
       # machine basic settings
       node.vm.box = "centos/7"
+      # node.vm.box_version = "1509.01"
       node.vm.hostname = "server#{i}.example.com"
       # yes this is a bug in Vagrant: we need to provide the ip-address even if auto_config doesn't use it
       node.vm.network "private_network", ip: "192.168.4.2#{i}0", auto_config: false
@@ -38,7 +57,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.memory = "1024"
         # Get disk path
         vb.name = "server#{i}"
-        vb.gui = true
         line = `VBoxManage list systemproperties | grep "Default machine folder"`
         vb_machine_folder = line.split(':')[1].strip()
         disk_name = "disk2.vdi"
@@ -54,29 +72,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       # provision machine using ansible
       node.vm.provision "ansible" do |ansible|
-        ansible.host_vars = { "server#{i}" => { "private_ip_address" => "192.168.4.2#{i}0" } }
+        ansible.host_vars = { "server#{i}" => { "private_ipv4_address" => "192.168.4.2#{i}0" , "private_ipv6_address" => "fd00::2#{i}0" } }
         ansible.playbook = "provisioning/servers.yml"
       end
 
-    end
-  end
-
-  # configure FreeIPA machine
-  config.vm.define "freeipa" do |node|
-    # machine basic settings
-    node.vm.box = "centos/7"
-    node.vm.hostname = "ipa"
-    node.vm.network "private_network", ip: "192.168.4.200", auto_config: false
-    # provider specific settings
-    node.vm.provider "virtualbox" do |vb|
-      vb.memory = "2048"
-      vb.name = "freeipa"
-      vb.gui = true
-    end
-    # provision machine using ansible
-    node.vm.provision :ansible do |ansible|
-      ansible.host_vars = { "freeipa" => { "private_ip_address" => "192.168.4.200" } }
-      ansible.playbook = "provisioning/freeipa.yml"
     end
   end
 
