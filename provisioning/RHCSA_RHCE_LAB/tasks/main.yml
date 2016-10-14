@@ -1,6 +1,5 @@
 ---
 #TODO always returns succeeded
-# sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
 - name: update private ipv4 address in /etc/hosts
   lineinfile: dest=/etc/hosts
     regexp="127.0.0.1\t{{ ansible_fqdn }}"
@@ -35,6 +34,7 @@
   shell: nmcli dev disconnect eth1;nmcli con up System\ eth1
   when: ifcfg_eth1_state.stat.exists == false
 
+# sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/g' /etc/ssh/sshd_config
 - name: allow ssh logon with password
   replace:
     dest: /etc/ssh/sshd_config
