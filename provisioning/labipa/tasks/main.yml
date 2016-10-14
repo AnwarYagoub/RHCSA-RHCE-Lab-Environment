@@ -4,7 +4,7 @@
     policy="targeted"
     state="permissive"
 
-- name: "Install labipa packages"
+- name: "Install FreeIPA packages"
   yum:
     name="{{ item }}"
     state="present"
@@ -20,12 +20,12 @@
     state: started
     enabled: yes
 
-- name: "Check if labipa is already installed"
+- name: "Check if FreeIPA is already installed"
   stat:
     path="/root/cacert.p12"
   register: labipa_status
 
-- name: "Configure labipa server"
+- name: "Configure FreeIPA server"
   shell:
     "
     ipa-server-install \
