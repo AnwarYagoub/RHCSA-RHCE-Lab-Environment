@@ -19,9 +19,6 @@
     name: haveged
     state: started
     enabled: yes
-  # https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Networking_Guide/sec-Network_Configuration_Using_sysconfig_Files.html
-- name: reconnect 'System eth1' to eth1
-  shell: nmcli dev disconnect eth1;nmcli con up System\ eth1
 
 - name: "Check if labipa is already installed"
   stat:
