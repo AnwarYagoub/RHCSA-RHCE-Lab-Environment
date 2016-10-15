@@ -7,7 +7,7 @@ This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert 
 - server1: CentOS box (Server With GUI).
 - server2: same as Server1
 - cache-server: Debian box used for package caching.
-- FreeIPA: CentOS box with FreeIPA configured.
+- labipa: CentOS box with FreeIPA configured.
 
 ## install dependencies:
 - [Virtualbox](https://www.virtualbox.org): cross-platform virtualization application.
@@ -51,21 +51,21 @@ $ sudo yum install VirtualBox-5.1
 
 **2.1 Install vagrant on Debian-based Linux Ubuntu/Mint (64-bit):**
 ```shell
-$ wget https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_x86_64.deb
+$ wget https://releases.hashicorp.com/vagrant/1.8.6/vagrant_1.8.6_i686.deb
 
-$ sudo dpkg -i vagrant_1.8.5_x86_64.deb
+$ sudo dpkg -i vagrant_1.8.6_i686.deb
 ```
 
 **2.2 Install vagrant on Debian-based distributions Ubuntu/Mint (32-bit):**
 ```shell
-$ wget https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_i686.deb
+$ wget https://releases.hashicorp.com/vagrant/1.8.6/vagrant_1.8.6_i686.deb
 
-$ sudo dpkg -i vagrant_1.8.5_i686.deb
+$ sudo dpkg -i vagrant_1.8.6_i686.deb
 ```
 
 **2.3 Install vagrant on RedHat-based distributions (64-bit):**
 ```shell
-$ wget https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_x86_64.rpm
+$ wget https://releases.hashicorp.com/vagrant/1.8.6/vagrant_1.8.5_x86_64.rpm
 
 $ sudo rpm -ivh vagrant_1.8.5_x86_64.rpm
 ```
@@ -112,7 +112,7 @@ $ vagrant up
 ```shell
 $ vagrant up MACHINE_NAME
 ```
-replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
+replace **MACHINE_NAME** with any of (server1, server2, cache-server, labipa)
 ```shell
 $ vagrant up server1
 ```
@@ -123,7 +123,7 @@ Navigate to project path where Vagranfile exists.
 ```shell
 $ vagrant ssh MACHINE_NAME
 ```
-replace **MACHINE_NAME** with any of (server1, server2, cache-server, FreeIPA)
+replace **MACHINE_NAME** with any of (server1, server2, cache-server, labipa)
 ```shell
 $ vagrant ssh server1
 ```
@@ -142,15 +142,15 @@ $ vagrant halt
 ```shell
 $ vagrant halt MACHINE_NAME
 ```
-replace **MACHINE_NAME** with any of (server1, server2, cache-server, freeipa)
+replace **MACHINE_NAME** with any of (server1, server2, cache-server, labipa)
 ```shell
 $ vagrant halt server1
 ```
 
 ## IP addresses & credentials
-| Server | IP address | username | password |
-|---|---|:---:|:---:|
-|cache-server|192.168.4.100 |vagrant|vagrant|
-|server1|192.168.4.210|user|password|
-|server2|192.168.4.220|user|password|
-|FreeIPA|192.168.4.200|user|password|
+| Server | IP address | username | password | username | password |
+|---|---|:---:|:---:|:---:|:---:|
+|cache-server|192.168.4.100 |vagrant|vagrant| | |
+|server1|192.168.4.210|user|password|root|password|
+|server2|192.168.4.220|user|password|root|password|
+|labipa|192.168.4.200 |user|password|root|password|

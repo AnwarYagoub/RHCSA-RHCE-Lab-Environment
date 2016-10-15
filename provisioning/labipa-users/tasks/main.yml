@@ -31,6 +31,15 @@
 
 - name: "Add user to FreeIPA"
   shell: echo $'{{ ipa_admin_password }}\n{{ ipa_admin_password }}' | ipa user-add {{ item.user }} --first {{ item.first }} --last {{ item.last }} --password; sleep 1;echo $'{{ ipa_admin_password }}\n{{ ipa_admin_password }}\n{{ ipa_admin_password }}'| kinit {{ item.user }};echo $'{{ ipa_admin_password }}'| kinit admin
-  with_items: "{{ freeipa_users }}"
+  with_items: "{{ labipa_users }}"
   register: output
   failed_when: output.changed == false
+
+- name: create ldap directory
+  file:
+      path: /home/ldap
+      state: directory
+# TODO make nfs4 share
+# mkdir /home/ldap/ldapuser1
+# chown ldapuser1:ldapuser1 /home/ldap/ldapuser1
+# for i in ldapuser1 ldapuser2 ldapuser3 ldapuser4 ldapuser5 isabelle; do mkdir /home/ldap/$i; chown $i:$i /home/ldap/$i; done
