@@ -37,6 +37,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     node.vm.network "private_network", ip: "192.168.4.200", auto_config: false
     # provider specific settings
     node.vm.provider "virtualbox" do |vb|
+      vb.gui = true
       vb.memory = "2048"
       vb.name = "labipa"
     end
@@ -59,6 +60,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       node.vm.network "private_network", ip: "192.168.4.2#{i}0", auto_config: false
       # provider specific settings
       node.vm.provider "virtualbox" do |vb|
+        vb.gui = true
         vb.memory = "1024"
         # Get disk path
         vb.name = "server#{i}"
