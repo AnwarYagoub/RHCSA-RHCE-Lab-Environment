@@ -29,23 +29,23 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-    # configure labipa machine
-    config.vm.define "labipa" do |node|
-      # machine basic settings
-      node.vm.box = "centos/7"
-      node.vm.hostname = "labipa.example.com"
-      node.vm.network "private_network", ip: "192.168.4.200", auto_config: false
-      # provider specific settings
-      node.vm.provider "virtualbox" do |vb|
-        vb.memory = "2048"
-        vb.name = "labipa"
-      end
-      # provision machine using ansible
-      node.vm.provision :ansible do |ansible|
-        ansible.host_vars = { "labipa" => { "private_ipv4_address" => "192.168.4.200" , "private_ipv6_address" => "fd00::200" }}
-        ansible.playbook = "provisioning/labipa.yml"
-      end
+  # configure labipa machine
+  config.vm.define "labipa" do |node|
+    # machine basic settings
+    node.vm.box = "centos/7"
+    node.vm.hostname = "labipa.example.com"
+    node.vm.network "private_network", ip: "192.168.4.200", auto_config: false
+    # provider specific settings
+    node.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+      vb.name = "labipa"
     end
+    # provision machine using ansible
+    node.vm.provision :ansible do |ansible|
+      ansible.host_vars = { "labipa" => { "private_ipv4_address" => "192.168.4.200" , "private_ipv6_address" => "fd00::200" }}
+      ansible.playbook = "provisioning/labipa.yml"
+    end
+  end
 
   # configure two machines server1 & server2
   (1..2).each do |i|
