@@ -6,7 +6,7 @@ ipa_ipv6: fd00::200
 network_interfaces:
   - eth0
   - eth1
-primary_dns: 8.8.8.8
+google_dns4: 8.8.8.8
 ipa_realm: "{{ domain_name | upper }}"
 ldap_directory_manager_password: password
 ipa_admin_password: password
