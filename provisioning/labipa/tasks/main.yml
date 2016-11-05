@@ -34,7 +34,7 @@
     	--realm={{ ipa_realm }} \
     	--ds-password={{ ldap_directory_manager_password }} \
     	--admin-password={{ ipa_admin_password }} \
-    	--forwarder={{ primary_dns }} \
+    	--forwarder={{ ansible_dns.nameservers[0] }} \
     	--reverse-zone={{ reverse_dns }} \
     	--unattended
     "
