@@ -51,30 +51,26 @@ $ sudo yum install VirtualBox-5.1
 
 **2.1 Install vagrant on Debian-based Linux Ubuntu/Mint (64-bit):**
 ```shell
-$ wget https://releases.hashicorp.com/vagrant/1.8.6/vagrant_1.8.6_i686.deb
+$ wget https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7_x86_64.deb
 
 $ sudo dpkg -i vagrant_1.8.6_i686.deb
 ```
 
 **2.2 Install vagrant on Debian-based distributions Ubuntu/Mint (32-bit):**
 ```shell
-$ wget https://releases.hashicorp.com/vagrant/1.8.6/vagrant_1.8.6_i686.deb
+$ wget https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7_i686.deb
 
 $ sudo dpkg -i vagrant_1.8.6_i686.deb
 ```
 
 **2.3 Install vagrant on RedHat-based distributions (64-bit):**
 ```shell
-$ wget https://releases.hashicorp.com/vagrant/1.8.6/vagrant_1.8.5_x86_64.rpm
-
-$ sudo rpm -ivh vagrant_1.8.5_x86_64.rpm
+$ sudo yum -y install https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7_x86_64.rpm
 ```
 
 **2.4 Install vagrant on RedHat-based distributions (32-bit):**
 ```shell
-$ wget https://releases.hashicorp.com/vagrant/1.8.5/vagrant_1.8.5_i686.rpm
-
-$ sudo rpm -ivh vagrant_1.8.5_i686.rpm
+$ sudo yum -y install https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7_i686.rpm
 ```
 ### 3. Install ansible :
 **3.1 Install ansible on Debian-based distributions (Ubuntu/Mint):**
