@@ -94,7 +94,7 @@
 
 - name: "Set graphical target (runlevel 5) as default"
   shell: systemctl set-default graphical.target
-  when: inventory_hostname_short == "labipa"
+  when: gui and inventory_hostname_short == "labipa"
   # notify: reboot TODO, for now do a 'vagrant reload' after provisioning
 
 # support 'scp labipa.example.com:/etc/ipa/ca.crt /etc/openldap/cacerts/' p145
