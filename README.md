@@ -12,7 +12,6 @@ This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert 
 ## install dependencies:
 - [Virtualbox](https://www.virtualbox.org): cross-platform virtualization application.
 - [Vagrant](https://www.vagrantup.com): tool for building complete development environments. With an easy-to-use workflow and focus on automation
-- [Ansible](https://www.ansible.com):  free-software platform for configuring and managing computers which combines multi-node software deployment, ad hoc task execution, and configuration management.
 
 Don't worry you don't have to be expert on any of these tools.
 ### 1. Install virtualbox :
@@ -71,24 +70,6 @@ $ sudo yum -y install https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7
 **2.4 Install vagrant on RedHat-based distributions (32-bit):**
 ```shell
 $ sudo yum -y install https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7_i686.rpm
-```
-### 3. Install ansible :
-**3.1 Install ansible on Debian-based distributions (Ubuntu/Mint):**
-```shell
-$ sudo apt-get install gcc libssl-dev python-dev python-setuptools
-
-$ sudo easy_install pip
-
-$ sudo pip install ansible netaddr
-```
-
-**3.2 Install ansible on RedHat-based distributions:**
-```shell
-$ sudo yum install gcc openssl-devel python-devel python-setuptools
-
-$ sudo easy_install pip
-
-$ sudo pip install ansible netaddr
 ```
 
 ## Get environment
