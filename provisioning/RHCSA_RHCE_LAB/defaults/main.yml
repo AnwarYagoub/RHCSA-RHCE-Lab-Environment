@@ -3,4 +3,5 @@ default_user_password: $6$Q3GYp7hPMnnS$eYYW8MWVIky3A71Isq714ErAjDseEgT6AoedBQz9V
 root_user_password: $6$Q3GYp7hPMnnS$eYYW8MWVIky3A71Isq714ErAjDseEgT6AoedBQz9VY8h4ZyYrbVPi3A.r8sGkbnUqxHb4DFK5GcxuGSw6ojED.
 ipa_ipv4: 192.168.4.200
 ipa_ipv6: fd00::200
+google_dns4: 8.8.8.8
 gui: true
