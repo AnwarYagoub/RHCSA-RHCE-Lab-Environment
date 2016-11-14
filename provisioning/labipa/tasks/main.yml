@@ -40,11 +40,6 @@
     "
   when: labipa_status.stat.exists == false
 
-# see https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/Linux_Domain_Identity_Authentication_and_Policy_Guide/Configuring_IPA_Users-Specifying_Default_User_Settings.html
-- name: change FreeIPA user defaults
-  shell: ipa config-mod --homedirectory /home/ldap --defaultshell /bin/bash --maxusername 32
-  when: labipa_status.stat.exists == false
-
 - name: "Start & Enable krb5kdc/firewalld services"
   service:
     name="{{ item }}"
