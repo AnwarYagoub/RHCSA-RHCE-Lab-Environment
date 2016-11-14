@@ -46,6 +46,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       ansible.install_mode = "pip"
       ansible.version = "2.2"
       ansible.host_vars = { "labipa" => { "private_ipv4_address" => "192.168.4.200" , "private_ipv6_address" => "fd00::200" }}
+      ansible.playbook = "provisioning/labipa.yml"
     end
   end
 
@@ -83,6 +84,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         ansible.install_mode = "pip"
         ansible.version = "2.2"
         ansible.host_vars = { "server#{i}" => { "private_ipv4_address" => "192.168.4.2#{i}0" , "private_ipv6_address" => "fd00::2#{i}0" } }
+        ansible.playbook = "provisioning/servers.yml"
       end
 
     end
