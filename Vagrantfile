@@ -24,7 +24,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.memory = "512"
       vb.name = "cache-server"
     end
-    node.vm.provision "ansible" do |ansible|
+    node.vm.provision :ansible_local do |ansible|
+      ansible.install_mode = "pip"
+      ansible.version = "2.2"
       ansible.playbook = "provisioning/cache-server.yml"
     end
   end
