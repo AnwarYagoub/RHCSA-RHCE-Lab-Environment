@@ -2,8 +2,13 @@
 Instructions for installing VirtualBox & Vagrant on Ubuntu 16.04
 
 ```shell
+# Update packages list
 sudo apt update
+
+# Upgrade Ubuntu
 sudo apt -y upgrade
+
+# Reboot machine
 sudo reboot
 ```
 
