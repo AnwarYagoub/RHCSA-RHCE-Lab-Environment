@@ -15,8 +15,7 @@ This project offers environment for all the labs in **Red Hat RHCSA/RHCE 7 Cert 
 
 Don't worry you don't have to be expert on any of these tools.
 
-## install Vagrant
-follow the individual instructions for your platform:
+Follow the individual instructions for your platform:
 - RHEL/Centos 7 with [VirtualBox](rhel-centos7-vbx.md) or [KVM](rhel-centos7-kvm.md)
 - [Fedora](fedora-vbx.md)
 - macOS TODO
