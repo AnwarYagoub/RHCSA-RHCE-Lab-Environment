@@ -51,7 +51,7 @@ sudo reboot
 
 ```shell
 # Get latest vagrant version
-export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | sed -n 's/.*href="\([^"]*\)".*/\1/p' | sort -r | head -1 | sed 's/[\/|vagrant]//g'`
+export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | sed -nr 's/.*href="\/vagrant\/([^/]*).*/\1/p' |  head -1 `
 
 # Install vagrant
 sudo dnf -y install https://releases.hashicorp.com/vagrant/"$vagrant_version"/vagrant_"$vagrant_version"_x86_64.rpm

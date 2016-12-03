@@ -1,12 +1,12 @@
 ### RHEL/CentOS 64-bit
 ```shell
-# Download VritualBox repository
+# Download VirtualBox repository
 sudo wget http://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
 
 # Clean repository cache & import GPG Key
-sudo yum clean dbcache; yum -y repolist    # Import the GPG keys
+sudo yum clean dbcache; sudo yum -y repolist    # Import the GPG keys
 
-# Install epel-release package to get epel repository
+# Ensure latest version of Extra Packages for Enterprise Linux is installed
 sudo yum -y install epel-release           # should be 7.8
 
 # Get vagrant version
@@ -30,10 +30,10 @@ sudo reboot
 
 ```shell
 # Get latest vagrant version
-export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | sed -n 's/.*href="\([^"]*\)".*/\1/p' | sort -r | head -1 | sed 's/[\/|vagrant]//g'`
+export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | sed -nr 's/.*href="\/vagrant\/([^/]*).*/\1/p' |  head -1 `
 
 # Install vagrant
-yum -y install https://releases.hashicorp.com/vagrant/"$vagrant_version"/vagrant_"$vagrant_version"_x86_64.rpm
+sudo yum -y install https://releases.hashicorp.com/vagrant/"$vagrant_version"/vagrant_"$vagrant_version"_x86_64.rpm
 
 # Check vagrant version
 vagrant --version
