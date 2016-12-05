@@ -30,7 +30,8 @@ sudo reboot
 
 ```shell
 # Get latest vagrant version
-export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | sed -nr 's/.*href="\/vagrant\/([^/]*).*/\1/p' |  head -1 `
+export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | sed -n '/.*href="\/vagrant\/\([^/]*\).*/{s//\1/p;q}' `
+export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | awk 'match($0, /href="\/vagrant\/([^/]*)/, a) {print a[1]; exit}'`
 
 # Install vagrant
 sudo yum -y install https://releases.hashicorp.com/vagrant/"$vagrant_version"/vagrant_"$vagrant_version"_x86_64.rpm
