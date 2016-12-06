@@ -10,8 +10,8 @@ eval $(ssh-agent); echo $'eval $(ssh-agent)' >> ~/.bash_profile
 ssh-add ~/.ssh/rhce; echo $'ssh-add ~/.ssh/rhce' >> ~/.bash_profile
 
 # Get latest vagrant version
-export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | sed -n '/.*href="\/vagrant\/\([^/]*\).*/{s//\1/p;q}' `
-export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | awk 'match($0, /href="\/vagrant\/([^/]*)/, a) {print a[1]; exit}'`
+export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | sed -nr '/.*href="\/vagrant\/([^/]*).*/{s//\1/p;q}' ` # from top of page
+export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | awk 'match($0, /href="\/vagrant\/([^/]*)/, a)  {if (RSTART)  { ++i; v[i]=a[1]}} END {n = asort (v); print v[n]}'`
 # Install packages
 sudo yum -y install https://releases.hashicorp.com/vagrant/"$vagrant_version"/vagrant_"$vagrant_version"_x86_64.rpm git qemu libvirt libvirt-devel ruby-devel gcc qemu-kvm
 

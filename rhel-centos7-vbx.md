@@ -1,4 +1,4 @@
-### RHEL/CentOS 64-bit
+### Install Vagrant using VirtualBox on RHEL/CentOS 64-bit
 ```shell
 # Download VirtualBox repository
 sudo wget http://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
@@ -7,16 +7,17 @@ sudo wget http://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -O /e
 sudo yum clean dbcache; sudo yum -y repolist    # Import the GPG keys
 
 # Ensure latest version of Extra Packages for Enterprise Linux is installed
-sudo yum -y install epel-release           # should be 7.8
+sudo yum -y install epel-release      # should be 7.8
 
-# Get vagrant version
-export virtualbox_version=`yum -y search VirtualBox | grep "VirtualBox-" | sed 's/ : Oracle VM VirtualBox//' | sed 's/.x86_64//' | tail -1`
+# Get latest VirtualBox version
+export virtualbox_version=`yum -y search VirtualBox | awk 'match($0, /(VirtualBox-[0-9]\.[0-9])/, a) {b=a[1]} END {print b}'`  # depends on yum sorting
+export virtualbox_version=`yum -y search VirtualBox | awk 'match($0, /(VirtualBox-[0-9]\.[0-9])/, a)  {if (RSTART)  { ++i; v[i]=a[1]}} END {n = asort (v); print v[n]}'`
 
 # Install packages
 sudo yum -y install git gcc make kernel-devel $virtualbox_version
 
 # Install VirtualBox kernel modules
-sudo /sbin/vboxconfig                      # load the vboxdrv kernel module
+sudo /sbin/vboxconfig                 # load the vboxdrv kernel module
 
 # Check if vboxdrv service is started without errors
 systemctl status vboxdrv              # enabled?
@@ -30,8 +31,8 @@ sudo reboot
 
 ```shell
 # Get latest vagrant version
-export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | sed -n '/.*href="\/vagrant\/\([^/]*\).*/{s//\1/p;q}' `
-export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | awk 'match($0, /href="\/vagrant\/([^/]*)/, a) {print a[1]; exit}'`
+export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | sed -nr '/.*href="\/vagrant\/([^/]*).*/{s//\1/p;q}' ` # from top of page
+export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | awk 'match($0, /href="\/vagrant\/([^/]*)/, a)  {if (RSTART)  { ++i; v[i]=a[1]}} END {n = asort (v); print v[n]}'`
 
 # Install vagrant
 sudo yum -y install https://releases.hashicorp.com/vagrant/"$vagrant_version"/vagrant_"$vagrant_version"_x86_64.rpm
