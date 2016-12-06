@@ -29,14 +29,14 @@
   shell:
     "
     ipa-server-install \
-    	--setup-dns \
-    	--domain={{ domain_name }} \
-    	--realm={{ ipa_realm }} \
-    	--ds-password={{ ldap_directory_manager_password }} \
-    	--admin-password={{ ipa_admin_password }} \
-    	--forwarder={{ ansible_dns.nameservers[0] }} \
-    	--reverse-zone={{ reverse_dns }} \
-    	--unattended
+      --setup-dns \
+      --domain={{ domain_name }} \
+      --realm={{ ipa_realm }} \
+      --ds-password={{ ldap_directory_manager_password }} \
+      --admin-password={{ ipa_admin_password }} \
+      --forwarder={{ ansible_dns.nameservers[0] }} \
+      --reverse-zone={{ reverse_dns }} \
+      --unattended
     "
   when: labipa_status.stat.exists == false
 
@@ -64,3 +64,15 @@
     - kpasswd
     - dns
     - ntp
+
+- name: pip install tzupdate
+  pip:
+    name: tzupdate
+  when: inventory_hostname_short == "labipa"
+
+# see https://github.com/cdown/tzupdate TODO CentOS GUI can be set to detect timezone, but how can we set this automated?
+- name: set timezone based on geolocation
+  shell: /bin/sleep 15; tzupdate # sleep prevents Python error when running tzupdate immediate after install
+  async: 60 # takes quite some time
+  poll: 0 # we don't need to wait for this to finish
+  when: inventory_hostname_short == "labipa"

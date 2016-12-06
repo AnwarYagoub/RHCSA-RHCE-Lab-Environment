@@ -1,3 +1,0 @@
----
-- name: update pip
-  shell: pip install --upgrade pip
