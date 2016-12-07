@@ -23,8 +23,21 @@ Follow the individual instructions for your platform:
 - Windows TODO
 
 
+## Download (clone) lab environment from GitHub
+```shell
+cd ~
+git clone https://github.com/AnwarYagoub/RHCSA-RHCE-Lab-Environment.git
+cd ~/RHCSA-RHCE-Lab-Environment
+```
+
+If your distribution runs without GUI, then execute these 2 commands:
+```shell
+sed -i 's/gui\: true/gui\: false/g' provisioning/RHCSA_RHCE_LAB/defaults/main.yml   # no need for gui on commandline
+sed -i 's/vb.gui = true/vb.gui = false/g' Vagrantfile # without GUI vagrant will error with 'vb.gui = true'
+```
+
 ## How to start servers?
-Navigate to project path where Vagranfile exists.
+Navigate to project path where Vagrantfile exists.
 
 - setup all servers
 ```shell

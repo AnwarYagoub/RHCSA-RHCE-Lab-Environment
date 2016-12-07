@@ -1,5 +1,6 @@
-### Ubuntu 16.04
-Instructions for installing VirtualBox & Vagrant on Ubuntu 16.04
+### Instructions for installing VirtualBox & Vagrant on Ubuntu
+
+Tested on Ubuntu 16.04
 
 ```shell
 # Update packages list
@@ -24,6 +25,7 @@ ssh-add ~/.ssh/rhce; echo $'ssh-add ~/.ssh/rhce' >> ~/.profile
 wget -q -O - http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc | sudo apt-key add -
 sudo sh -c 'echo "deb http://download.virtualbox.org/virtualbox/debian `lsb_release -sc` non-free contrib" > /etc/apt/sources.list.d/virtualbox.org.list'
 export ubuntu_codename=`lsb_release -sc`
+# which of the following 2 is easiest to maintain, has most chance to fail gracefully when yum implementation changes or Vbox gets new numbering scheme  
 export virtualbox_version=`wget --quiet -O - http://download.virtualbox.org/virtualbox/debian/dists/$ubuntu_codename/contrib/binary-amd64/Packages | awk 'match($0, /(virtualbox-[0-9]\.[0-9])/, a) {b=a[1]} END {print b}'` # depends on sorting in Packages file
 export virtualbox_version=`wget --quiet -O - http://download.virtualbox.org/virtualbox/debian/dists/$ubuntu_codename/contrib/binary-amd64/Packages | awk 'match($0, /(virtualbox-[0-9]\.[0-9])/, a)  {if (RSTART)  { ++i; v[i]=a[1]}} END {n = asort (v); print v[n]}'`
 
@@ -37,15 +39,4 @@ sudo apt update
 
 # Install packages
 sudo apt -y install $virtualbox_version git ./vagrant_"$vagrant_version"_x86_64.deb; rm ./vagrant_"$vagrant_version"_x86_64.deb
-
-# Download (clone) lab environment from GitHub
-cd ~
-git clone https://github.com/AnwarYagoub/RHCSA-RHCE-Lab-Environment.git
-cd ~/RHCSA-RHCE-Lab-Environment
-```
-
-If ubuntu runs without GUI, then execute these 2 commands:
-```shell
-sed -i 's/gui\: true/gui\: false/g' provisioning/RHCSA_RHCE_LAB/defaults/main.yml   # no need for gui on commandline
-sed -i 's/vb.gui = true/vb.gui = false/g' Vagrantfile # without GUI vagrant will error with 'vb.gui = true'
 ```
