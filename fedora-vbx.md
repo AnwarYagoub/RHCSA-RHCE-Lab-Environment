@@ -1,6 +1,6 @@
-### Install Vagrant using VirtualBox on Fedora 24
+### Install Vagrant using VirtualBox on Fedora 25
 
-Tested for Fedora 24
+Tested for Fedora 25
 
 Run the following commands on fresh installed Fedora first:
 ```shell
@@ -30,12 +30,8 @@ sudo wget http://download.virtualbox.org/virtualbox/rpm/fedora/virtualbox.repo -
 sudo dnf clean dbcache
 sudo dnf -y repolist        # Import the GPG keys
 
-# Get vagrant version
-export virtualbox_version=`yum -y search VirtualBox | awk 'match($0, /(VirtualBox-[0-9]\.[0-9])/, a) {b=a[1]} END {print b}'`  # depends on yum sorting
-export virtualbox_version=`yum -y search VirtualBox | awk 'match($0, /(VirtualBox-[0-9]\.[0-9])/, a)  {if (RSTART)  { ++i; v[i]=a[1]}} END {n = asort (v); print v[n]}'`
-
-# Install packages
-sudo dnf -y install git gcc make kernel-devel $virtualbox_version
+# Install lastest virtualbox; will error when multiple versions of virtualbox are offered.
+sudo dnf -y install git gcc make kernel-devel VirtualBox*
 
 # Install VirtualBox kernel modules
 sudo /sbin/vboxconfig       # load the vboxdrv kernel module, will fail without dnf update
@@ -52,7 +48,9 @@ sudo reboot
 
 ```shell
 # Get latest vagrant version
+# which of the following 3 is easiest to maintain and has most chance to fail gracefully when content or url change?
 export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | sed -nr '/.*href="\/vagrant\/([^/]*).*/{s//\1/p;q}' ` # from top of page
+export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | awk 'match($0, /href="\/vagrant\/([^/]*)/, a) {print a[1]; exit}'` # pick top version listed on page
 export vagrant_version=`wget --quiet -O - https://releases.hashicorp.com/vagrant/ | awk 'match($0, /href="\/vagrant\/([^/]*)/, a)  {if (RSTART)  { ++i; v[i]=a[1]}} END {n = asort (v); print v[n]}'`
 
 # Install vagrant
@@ -60,15 +58,4 @@ sudo dnf -y install https://releases.hashicorp.com/vagrant/"$vagrant_version"/va
 
 # Check vagrant version
 vagrant --version
-
-# Download (clone) lab environment from GitHub
-cd ~
-git clone https://github.com/AnwarYagoub/RHCSA-RHCE-Lab-Environment.git
-cd ~/RHCSA-RHCE-Lab-Environment
-```
-
-If Fedora runs without GUI, then execute these 2 commands:
-```shell
-sed -i 's/gui\: true/gui\: false/g' provisioning/RHCSA_RHCE_LAB/defaults/main.yml   # no need for gui on commandline
-sed -i 's/vb.gui = true/vb.gui = false/g' Vagrantfile # without GUI vagrant will error with 'vb.gui = true'
 ```
