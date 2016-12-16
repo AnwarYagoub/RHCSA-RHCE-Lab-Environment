@@ -1,4 +1,3 @@
-### Instructions for installing VirtualBox & Vagrant on Microsoft Windows
 
 Tested on Windows 8.1 & Windows 10
 
