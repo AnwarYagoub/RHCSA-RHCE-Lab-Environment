@@ -29,7 +29,7 @@ errors and failures my occur during update***
 
 
 ## Windows Package Manager:
-This method is new to Windows users but its much more easier to install
+This method may be new to some Windows users but its much more easier to install
 and maintain since it blows away the D&I old method and make ease updating
 packages for Windows. One good Windows package manager is [Chocolaty][Chocolaty].
 
