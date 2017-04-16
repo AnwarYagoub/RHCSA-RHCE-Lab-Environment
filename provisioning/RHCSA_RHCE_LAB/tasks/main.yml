@@ -97,7 +97,7 @@
   when: gui and inventory_hostname_short == "labipa"
   # notify: reboot TODO, for now do a 'vagrant reload' after provisioning
 
-# support 'scp labipa.example.com:/etc/ipa/ca.crt /etc/openldap/cacerts/' p145
+# support 'scp labipa.example.local:/etc/ipa/ca.crt /etc/openldap/cacerts/' p145
 - name: make /etc/openldap/cacerts directory
   file:
     path: /etc/openldap/cacerts
