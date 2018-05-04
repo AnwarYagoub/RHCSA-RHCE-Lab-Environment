@@ -1,4 +1,4 @@
-domain_name: example.com
+domain_name: example.local
 ipa_hostname: labipa
 ipa_fqdn: "{{ ipa_hostname }}.{{ domain_name }}"
 ipa_ipv4: 192.168.4.200

@@ -1,3 +1,8 @@
 ---
 - name: update pip
   shell: pip install --upgrade pip
+
+- name: restart sshd
+  service:
+    name: sshd
+    state: restarted
