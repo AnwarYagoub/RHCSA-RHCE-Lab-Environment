@@ -11,4 +11,4 @@ ipa_realm: "{{ domain_name | upper }}"
 ldap_directory_manager_password: password
 ipa_admin_password: password
 rdns: "{{ ipa_ipv4 | ipaddr('revdns') }}"
-reverse_dns: "{{ rdns.split('.')[-6] }}.{{ rdns.split('.')[-5] }}.{{ rdns.split('.')[-4] }}.{{ rdns.split('.')[-3] }}.{{ rdns.split('.')[-2] }}."
+reverse_dns: "200.4.168.192."
