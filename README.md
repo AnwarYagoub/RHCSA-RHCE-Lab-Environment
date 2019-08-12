@@ -31,9 +31,11 @@ $ sudo apt-get install virtualbox-5.1
 ```
 **1.2 Install virtualbox on Oracle Linux/RHEL/CentOS:**
 ```shell
-$ wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | rpm --import -
+$ wget -O /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
 
-$ sudo wget http://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
+$ # wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | rpm --import -
+
+$ # sudo wget http://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
 
 $ sudo yum install VirtualBox-5.1
 ```
@@ -51,7 +53,6 @@ $ sudo yum install VirtualBox-5.1
 **2.1 Install vagrant on Debian-based Linux Ubuntu/Mint (64-bit):**
 ```shell
 $ wget https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7_x86_64.deb
-
 $ sudo dpkg -i vagrant_1.8.6_i686.deb
 ```
 
@@ -64,7 +65,7 @@ $ sudo dpkg -i vagrant_1.8.6_i686.deb
 
 **2.3 Install vagrant on RedHat-based distributions (64-bit):**
 ```shell
-$ sudo yum -y install https://releases.hashicorp.com/vagrant/1.8.7/vagrant_1.8.7_x86_64.rpm
+$ sudo yum -y install https://releases.hashicorp.com/vagrant/2.2.5/vagrant_2.2.5_x86_64.rpm
 ```
 
 **2.4 Install vagrant on RedHat-based distributions (32-bit):**

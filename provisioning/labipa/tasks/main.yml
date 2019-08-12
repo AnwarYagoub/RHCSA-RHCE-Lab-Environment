@@ -4,6 +4,28 @@
     policy="targeted"
     state="permissive"
 
+# Corrupt urllib3 package https://www.wmduszyk.com/?p=12080&langswitch_lang=pl
+- name: Check if directory ssl_match_hostname exists
+  stat:
+    path: /usr/lib/python2.7/site-packages/urllib3/packages/patched
+  register: stat_result
+
+- name: Remove files for python-urllib3.noarch 0:1.10.2-3.el7 install
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /usr/lib/python2.7/site-packages/urllib3/packages/six.py
+    - /usr/lib/python2.7/site-packages/urllib3/packages/six.pyc
+    - /usr/lib/python2.7/site-packages/urllib3/packages/six.pyo
+    - /usr/lib/python2.7/site-packages/urllib3/packages/ssl_match_hostname
+  when: stat_result.stat.exists == False 
+
+- name: Hack so that urllib3 doesn't become corrupted
+  file:
+    path: "/usr/lib/python2.7/site-packages/urllib3/packages/patched"
+    state: touch
+
 - name: "Install FreeIPA packages"
   yum:
     name="{{ item }}"
@@ -25,12 +47,25 @@
     path="/root/cacert.p12"
   register: labipa_status
 
+- name: Fix bindinstance for DNS forwarding
+  copy:
+    src: bindinstance.py
+    dest: /usr/lib/python2.7/site-packages/ipaserver/install/bindinstance.py
+
+- name: Remove compiled version of bindinstance
+  file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /usr/lib/python2.7/site-packages/ipaserver/install/bindinstance.pyc
+
 - name: "Configure FreeIPA server"
   shell:
     "
     ipa-server-install \
     	--setup-dns \
     	--domain={{ domain_name }} \
+      --allow-zone-overlap \
     	--realm={{ ipa_realm }} \
     	--ds-password={{ ldap_directory_manager_password }} \
     	--admin-password={{ ipa_admin_password }} \
