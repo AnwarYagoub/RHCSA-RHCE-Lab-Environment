@@ -31,9 +31,11 @@ $ sudo apt-get install virtualbox-5.1
 ```
 **1.2 Install virtualbox on Oracle Linux/RHEL/CentOS:**
 ```shell
-$ wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | rpm --import -
+$ wget -O /etc/yum.repos.d/virtualbox.repo http://download.virtualbox.org/virtualbox/rpm/rhel/virtualbox.repo
 
-$ sudo wget http://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
+$ # wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | rpm --import -
+
+$ # sudo wget http://download.virtualbox.org/virtualbox/rpm/el/virtualbox.repo -O /etc/yum.repos.d/virtualbox.repo
 
 $ sudo yum install VirtualBox-5.1
 ```
