@@ -40,13 +40,7 @@
     dest: /etc/ssh/sshd_config
     regexp: ^PasswordAuthentication no
     replace: PasswordAuthentication yes
-  register: allow_ssh_password
-
-- name: restart sshd
-  service:
-    name: sshd
-    state: restarted
-  when: allow_ssh_password|succeeded
+  notify: restart sshd
 
 - name: "Add user account & set its password"
   user:
@@ -97,7 +91,7 @@
   when: gui and inventory_hostname_short == "labipa"
   # notify: reboot TODO, for now do a 'vagrant reload' after provisioning
 
-# support 'scp labipa.example.com:/etc/ipa/ca.crt /etc/openldap/cacerts/' p145
+# support 'scp labipa.example.local:/etc/ipa/ca.crt /etc/openldap/cacerts/' p145
 - name: make /etc/openldap/cacerts directory
   file:
     path: /etc/openldap/cacerts

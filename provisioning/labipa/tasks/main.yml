@@ -4,6 +4,11 @@
     policy="targeted"
     state="permissive"
 
+- name: "remove python urllib3"
+  pip:
+    name: urllib3
+    state: absent
+
 - name: "Install FreeIPA packages"
   yum:
     name="{{ item }}"

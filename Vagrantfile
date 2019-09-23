@@ -18,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # configure cache-server machine
   config.vm.define "cache-server" do |node|
     node.vm.box = "debian/jessie64"
-    node.vm.hostname = "cache-server.example.com"
+    node.vm.hostname = "cache-server.example.local"
     node.vm.network "private_network", ip: "192.168.4.100"
     node.vm.provider "virtualbox" do |vb|
       vb.memory = "512"
@@ -35,14 +35,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "labipa" do |node|
     # machine basic settings
     node.vm.box = "centos/7"
-    node.vm.hostname = "labipa.example.com"
+    node.vm.hostname = "labipa.example.local"
     node.vm.network "private_network", ip: "192.168.4.200", auto_config: false
     # provider specific settings
     node.vm.provider "virtualbox" do |vb|
-      vb.gui = true
       vb.memory = "2048"
       vb.name = "labipa"
     end
+
+    node.vm.provision "shell", inline: <<-SHELL
+                 yum install -y epel-release
+                 yum update -y
+                 yum install -y python-simplejson python-pip
+                 pip install netaddr
+                 SHELL
+
     # provision machine using ansible
     node.vm.provision :ansible_local do |ansible|
       ansible.install_mode = "pip"
@@ -59,12 +66,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       # machine basic settings
       node.vm.box = "centos/7"
       # node.vm.box_version = "1509.01"
-      node.vm.hostname = "server#{i}.example.com"
+      node.vm.hostname = "server#{i}.example.local"
       # yes this is a bug in Vagrant: we need to provide the ip-address even if auto_config doesn't use it
       node.vm.network "private_network", ip: "192.168.4.2#{i}0", auto_config: false
       # provider specific settings
       node.vm.provider "virtualbox" do |vb|
-        vb.gui = true
         vb.memory = "1024"
         # Get disk path
         vb.name = "server#{i}"
