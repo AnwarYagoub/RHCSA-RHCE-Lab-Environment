@@ -3,7 +3,7 @@
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
-Vagrant::DEFAULT_SERVER_URL.replace('https://vagrantcloud.com')
+# Vagrant::DEFAULT_SERVER_URL.replace('https://vagrantcloud.com')
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
@@ -25,6 +25,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.memory = "512"
       vb.name = "cache-server"
     end
+    node.vm.provision "shell", inline: "apt-get install -y python-setuptools && easy_install pip"
+
     node.vm.provision :ansible_local do |ansible|
       ansible.install_mode = "pip"
       ansible.version = "latest"
@@ -45,6 +47,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.name = "labipa"
     end
     # provision machine using ansible
+    node.vm.provision "shell", inline: "yum install -y python-setuptools && easy_install pip"
     node.vm.provision :ansible_local do |ansible|
       ansible.install_mode = "pip"
       ansible.version = "latest"
@@ -82,6 +85,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 2, '--device', 0, '--type', 'hdd', '--medium', second_disk]
       end
 
+      node.vm.provision "shell", inline: "yum install -y python-setuptools && easy_install pip"
       # provision machine using ansible
       node.vm.provision :ansible_local do |ansible|
         ansible.install_mode = "pip"
